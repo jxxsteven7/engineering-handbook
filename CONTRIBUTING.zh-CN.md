@@ -8,7 +8,7 @@
 
 - 这是一个文档仓库，只有一个维护者，所以维护者直接往 `main` 提交。不开分支、不走 PR、没有版本号；[完整流程](docs/repository/protect-main.zh-CN.md)是给有人依赖的代码准备的。
 - 外部贡献者 fork 仓库后提 PR。
-- 有两道检查仍然保留。`commit-msg` hook 检查每条 commit 信息：`<type>: <summary>`、英文、没有 AI 或 agent 署名。每次 push，CI 检查每篇文档和译文是否一致、脚本测试是否通过、commit 里有没有署名。
+- 有两道检查仍然保留。`commit-msg` hook 检查每条 commit 信息：`<type>: <summary>`、英文、没有 AI 或 agent 署名。每次 push，CI 检查每篇文档和译文是否一致、脚本测试是否通过、commit 里有没有署名。`pre-commit` hook 只在文档需要同步时提醒一下。
 - 里程碑（比如第一次公开）手动打 tag。
 
 ## 准备
@@ -31,28 +31,29 @@ git config core.hooksPath .githooks
 
 ## 写一篇文档
 
-1. 先写英文版 `X.md`。先说做什么，再说为什么，只放大家真正会敲的命令。放进去的每条命令都要亲自跑过。
-2. 把英文改得自然。用 Claude Code 的话，对这个文件运行 [humanizer](https://github.com/blader/humanizer) skill。
-3. 逐块翻译成 `X.zh-CN.md`：
-   - 标题、段落、列表项、引用和表格都一样多，顺序相同；
-   - 代码块原样照抄，所以代码里的注释用英文；
-   - 行内代码完全相同；
-   - 链接指向其他文档的中文版，开头放语言切换。
-4. 把中文改得自然。用 Claude Code 的话，对这个文件运行 [humanizer-zh](https://github.com/op7418/humanizer-zh) skill。
-5. 记录同步戳，跑检查：
+1. 用一种语言写或改文档，一般是中文（`X.zh-CN.md`）。要短、要直白：先说做什么，再说为什么，只放大家真正会敲的命令。放进去的每条命令都要亲自跑过。
+2. 在 Claude Code 里运行 `/sync-docs`。它只在你改过的地方更新另一种语言，用 humanizer skill 打磨新写的文字，记录同步戳，再跑检查。用 Codex 的话，让它按 `.claude/skills/sync-docs/SKILL.md` 去做。
+3. 看一遍结果，然后把两种语言一起提交。
 
-   ```bash
-   node scripts/check-docs-sync.mjs --update docs/topic/X.md
-   node scripts/check-docs-sync.mjs
-   node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
-   SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
-   ```
+两个文件必须保持对应，同步检查会强制这一点：
 
-同步检查比较的是结构、代码和链接，判断不了译文意思是否一致，所以记录同步戳之前，两个版本都要读一遍。以后改一篇文档时，两种语言在同一个 commit 里一起改。
+- 标题、段落、列表项、引用和表格都一样多，顺序相同；
+- 代码块完全相同，所以代码里的注释用英文；
+- 行内代码完全相同；
+- 链接指向其他文档的同语言版本，开头放语言切换。
+
+检查判断不了译文意思是否一致，所以提交前要看一遍 diff。如果只提交了一种语言，pre-commit hook 会提醒你，push 之后 CI 也会报错，直到两边一致。想看哪些需要同步，或者手动跑检查：
+
+```bash
+node scripts/check-docs-sync.mjs --status
+node scripts/check-docs-sync.mjs
+node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
+```
 
 ## 和 agent 一起工作
 
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/repository/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 4e7541e90420a04f81ab4b14df267acf0eab40556797c7d94e62425ffc3fff90 -->
+<!-- docs-sync: e1797e1dcdece6a4e5772bb9f138ef05cbb0b99b78fddb31c3e4b0cfc0d24b78 -->
