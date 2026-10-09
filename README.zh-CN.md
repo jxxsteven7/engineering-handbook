@@ -73,7 +73,7 @@
 | 文档 | 给 agent 的 prompt |
 |---|---|
 | [配置工作站](docs/tools/workstation.zh-CN.md)：系统包、git 配置、Claude Code 和 Codex、statusline、git 提示符、权限 | [workstation.md](prompts/setup/workstation.md) |
-| [SSH 和 GitHub](docs/tools/ssh-and-github.zh-CN.md)：SSH key、`~/.ssh/config`、`gh` 登录 | 没有：涉及密钥和账号，你自己做 |
+| [SSH 和 GitHub](docs/tools/ssh-and-github.zh-CN.md)：SSH key、`~/.ssh/config`、`gh` 登录、服务器上的剪贴板 | 密钥和登录你自己做；服务器上的剪贴板：把 [workstation.md](prompts/setup/workstation.md) 和服务器别名交给 agent |
 | [仓库和 worktree](docs/tools/git-repos.zh-CN.md)：开仓库的四种情况、开 worktree、任务做完后清理 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
 | [Git 救急](docs/tools/git-first-aid.zh-CN.md)：rebase 冲突和常见意外 | |
 
@@ -110,4 +110,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: e303a6fdcbb15e9ad469b786c623257386321306a5f81b7c303152edefe6422f -->
+<!-- docs-sync: 45b92766d58a32014e3d61fd995b7a03fc1c7c78f3e82de87e39a40a87623bb5 -->

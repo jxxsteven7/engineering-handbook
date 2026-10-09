@@ -73,7 +73,7 @@ Files for your repository: [templates/repo/](templates/repo/). Files for the ove
 | Doc | Prompts for agents |
 |---|---|
 | [Set up a workstation](docs/tools/workstation.md): packages, git settings, Claude Code and Codex, statusline, git prompt, permissions | [workstation.md](prompts/setup/workstation.md) |
-| [SSH and GitHub](docs/tools/ssh-and-github.md): SSH key, `~/.ssh/config`, logging in to `gh` | None: these involve keys and accounts, so you do them yourself |
+| [SSH and GitHub](docs/tools/ssh-and-github.md): SSH key, `~/.ssh/config`, logging in to `gh`, the clipboard on servers | You do keys and logins yourself; for the clipboard on servers, give [workstation.md](prompts/setup/workstation.md) and the server's alias to an agent |
 | [Repositories and worktrees](docs/tools/git-repos.md): four ways to open a repository, creating worktrees, cleaning up after a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
 | [Git first aid](docs/tools/git-first-aid.md): rebase conflicts and common accidents | |
 

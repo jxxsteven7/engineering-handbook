@@ -72,5 +72,5 @@ The installer never uses sudo and can run again safely. It ends with a test whos
 ## Good to know
 
 - To paste a screenshot on GNOME, press PrtSc, select an area, press Enter, then Ctrl+V in Claude Code. `[Image #1]` appears in the input box.
-- Over ssh, the installer makes the colors match your local terminal; log in again once. Ctrl+V reads the server's clipboard, so copy images there with `scp` and give the path instead.
+- Over ssh, the installer makes the colors match your local terminal; log in again once. To copy on select, and paste text and screenshots with Ctrl+V, in Claude Code on a server too, see the section on servers in [SSH and GitHub](ssh-and-github.md).
 - The scripts are written for Ubuntu and bash. For macOS and zsh, see the porting notes at the end of the prompt.

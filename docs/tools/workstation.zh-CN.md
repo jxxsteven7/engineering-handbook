@@ -72,7 +72,7 @@ bash ~/agentic-engineering-handbook/templates/workstation/install.sh
 ## 补充说明
 
 - 在 GNOME 上贴截图：按 PrtSc，框选区域，按 Enter，回到 Claude Code 按 Ctrl+V，输入框里会出现 `[Image #1]`。
-- ssh 登录的机器上，安装脚本会让颜色和本地终端一致，重新登录一次即可。Ctrl+V 读的是服务器的剪贴板，所以图片要先用 `scp` 传过去，再给出路径。
+- ssh 登录的机器上，安装脚本会让颜色和本地终端一致，重新登录一次即可。想在服务器上的 Claude Code 里也选中即复制、Ctrl+V 贴文字和截图，见 [SSH 和 GitHub](ssh-and-github.zh-CN.md) 的服务器一节。
 - 这些脚本是为 Ubuntu 和 bash 写的。macOS 和 zsh 的情况见 prompt 末尾的移植说明。
 
-<!-- docs-sync: 4de0f0b9fee7e099a363b45e9474aeb40aeee7a51aa47a0b166fd403bc62d9dd -->
+<!-- docs-sync: c59da2dd79e54c686152c6e370fb4a064c3695400870febf9ccf525f435e55c9 -->

@@ -121,7 +121,7 @@ if [[ -z "${SCRIPTS_ONLY-}" ]]; then
   case "${XDG_SESSION_TYPE:-}" in
     x11)     chk "T12c X11 desktop has xclip (needed to paste images)" "yes" "$(command -v xclip >/dev/null && echo yes || echo no)" ;;
     wayland) chk "T12c Wayland desktop has wl-paste (needed to paste images)" "yes" "$(command -v wl-paste >/dev/null && echo yes || echo no)" ;;
-    *)       echo "SKIP T12c (no desktop session: Ctrl+V reads the remote clipboard; copy images over with scp and give the path)" ;;
+    *)       echo "SKIP T12c (no desktop session: for the clipboard over ssh, give prompts/setup/workstation.md and this server's name to Claude Code on your own computer)" ;;
   esac
 fi
 
