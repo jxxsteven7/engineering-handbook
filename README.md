@@ -2,12 +2,30 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-How to run software projects when coding agents such as Claude Code and Codex write most of the code: where each piece of work lives, what an agent works on, when it stops, and what stays your job.
+I have to say, agents are moving fast. As a robotics PhD, I need to learn how to use agents in my research and engineering work. Over the last six months of development, though, I've found that while today's agents can already do a lot on their own, they sometimes don't know when to act, when to stop, or where to work, and they can easily make a mess of your workspace.
 
-A good agent knows when to act, when to stop, and where to work. It learns all three from you: from the plan you give it and from how your projects are organized. This handbook is about the plan and the organization.
+So I drew on my own engineering experience to put together a set of processes and rules for agentic engineering. I believe we still need to play the most important roles throughout development: the planner and the decision-maker. Working this way also helps us improve quickly.
 
-> [!NOTE]
-> Work in progress. Everything here comes from daily use on real projects. Parts marked as a trial are still being tested.
+As for how to read and use this repository, I've planned it in roughly two parts. The first is the rule docs that I maintain: what I've learned about writing code and doing engineering with agents, and the automated workflows I consider good practice, so that we stay in control of what we and our agents are doing. I promise to maintain this part by hand, keep it readable, and make it as fun to read as I can. The second part is the automation prompts: Markdown files generated from my rules. Once you understand the rules, you can feed these prompts straight to your agent to set things up.
+
+Specifically, my rules and workflows cover:
+
+1. Environment setup (getting ready):
+- Setting up agents and some handy tools on our computers
+- Servers, GitHub and SSH
+2. Collaborative project development
+- Protecting the main branch, GitHub worktrees and PRs
+- Code review and change lists (CLs), following Google
+- CI and CD
+- Versioning, tags and releases
+3. Getting more out of agents on long and continuous tasks
+- Planning well
+- Agent supervision / where people should make decisions
+4. Development and maintenance records
+- A progress doc you keep by hand, so you know what you're doing and what you've done
+- Experiment tables for the project
+- Visual experiment reports, which agents are good at, as an artifact or a website (Cloudflare)
+
 
 ## Principles
 

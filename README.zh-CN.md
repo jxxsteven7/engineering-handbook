@@ -2,12 +2,30 @@
 
 [English](README.md) | **简体中文**
 
-当 Claude Code、Codex 这类编程 agent 写了大部分代码，项目该怎么管：每项工作放在哪里，agent 做什么、什么时候停下，哪些事还得你自己来。
+不得不说，现在agent发展太快了，作为一名Phd in Robotics，我必须学会如何用agent辅助我完成科研和engineering work。但是根据最近半年的一些开发经验来看，我发现虽然现在的agent已经可以自己做好很多事情，但他有时候并不知道什么时候该做，什么时候该停，以及在哪里做，并且很可能会把你的工作空间搞得一团糟。
 
-好的 agent 知道什么时候该做，什么时候该停，以及在哪里做。这三点都是从你这里学来的：从你给它的计划里，从你组织项目的方式里。这本手册讲的就是怎么做计划、怎么组织项目。
+因此我根据自己的工程经验，总结了一套Agentic Engineering的流程和规则。我认为我们自己在整个开发过程中依然需要要扮演最重要的规划者、决策者的角色。而且这样做能让我们能够快速进步。
 
-> [!NOTE]
-> 仍在编写中。内容都来自真实项目的日常使用。标为试行的部分还在验证。
+至于读者们该如何阅读/使用本repo，我的规划是：其大致分为两部分，第一部分是我来维护的一些rules docs，上面是我总结的如何用agent写代码和做工程的一些经验，和我认为的比较规范的自动化流程，让我们能够对自己/自己的agent在做什么事情有把控，我承诺这部分将由我人为来维护，确保有较好的可读性，也尽可能能让读者读起来有趣一些；第二部分则是根据我的规则生成的自动化prompt md，在有了对规则的理解后，可以将prompt md直接喂给你的agent来完成相关的配置。
+
+具体的，我的这套规则流程包含：
+
+1. 环境配置（准备工作）：
+- 在我们的电脑配置好agent，以及一些方便的工具
+- 服务器、GitHub及SSH
+2. Project协作开发
+- main分支保护、GitHub worktree及PR
+- code-review和Change List (CL) 参考google
+- CI和CD
+- 版本管理、Tag及Release
+3. 长任务、连续任务提高agentic效率
+- 做好plan
+- agent监督 / 人应该在哪里决策
+4. 开发与维护记录
+- 人工维护的Progress Doc，自己清楚自己在干嘛，做了什么
+- Project的实验表格
+- agent擅长做的可视化实验报告，artifact或website (cloudflare)
+
 
 ## 原则
 
@@ -108,4 +126,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: b4f542d126674420a908763deae7f51cddde772071cdf5992842f2925d3219d8 -->
+<!-- docs-sync: a63d945cb4cbb2a69b97453310c813a1f6fe02a31985c985ee5c56d410cd2def -->
