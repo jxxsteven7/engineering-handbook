@@ -14,11 +14,17 @@ You are reviewing pull request #<N>. You are a new session and you did not write
 
 ## 1. Get the change
 
-Use a detached checkout, so that no branch is taken: the project's review worktree if it has one (often `../review-pr`), otherwise the current directory if `git status --short` is empty. If neither is possible, stop and ask.
+If you were opened in the pull request's own worktree, review it there and don't switch. That is the case when all three hold:
+
+- `git branch --show-current` prints the same name as `gh pr view <N> --json headRefName -q .headRefName`;
+- `git status --short` prints nothing;
+- `git rev-parse HEAD` prints the same sha as `gh pr view <N> --json headRefOid -q .headRefOid`.
+
+If the branch matches but the tree isn't clean or HEAD differs, stop and ask: the author may not have pushed yet. Otherwise use a detached checkout, so that no branch is taken: the project's review worktree if it has one (often `../review-pr`), otherwise the current directory if `git status --short` is empty. If neither is possible, stop and ask.
 
 ```bash
 git fetch origin pull/<N>/head
-git switch --detach FETCH_HEAD
+git switch --detach FETCH_HEAD                  # not in the pull request's own worktree
 gh pr view <N> --comments
 gh pr checks <N>
 git log --oneline origin/main..HEAD

@@ -56,7 +56,7 @@ claude -n feat-new-task
 
 ## Standing worktrees
 
-- `review-pr`: for reviewing other people's PRs; see [Code review](code-review.md).
+- `review-pr`: for reviewing other people's PRs, and PRs below the top of a stack; see [Code review](code-review.md).
 - `playtest`: for trying a version by hand. It is detached and only for testing; when you find a bug, note the version and fix it in a new worktree from `origin/main`.
 
 ## When the task is done

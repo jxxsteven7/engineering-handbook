@@ -18,21 +18,38 @@
 
 ## 关键命令
 
-在其他 worktree 旁边常驻一个 detached 的审查 worktree。它不占用任何分支，所以不会误往别人的分支上提交。
+`gh pr review` 本身不审代码，它只是把你的结论发到 GitHub 上：批准、要求修改或留评论。代码要你自己读。读之前，可以先开一个新的 agent 会话审一遍，不要用写这段代码的那个会话。Claude Code 用 `/code-review <N>`，带上 PR 号，它就审整个 PR。Codex 用 `codex review --base <base>`，审当前分支相对 base 的改动。
+
+自己的 PR：在它自己的 worktree 里开一个新会话。
+
+```bash
+cd ../feat-new-task
+claude -n review-pr123                                      # then type: /code-review 123
+codex review --base origin/main                             # or Codex
+```
+
+别人的 PR，或者 stack 里不在顶层的 PR：它们没有现成的 worktree，就用常驻的 `review-pr`。它是 detached 的，不占用任何分支，所以不会误往别人的分支上提交。
 
 ```bash
 git worktree add --detach ../review-pr origin/main          # once, from the main checkout
 
 cd ../review-pr
 git fetch origin pull/123/head && git switch --detach FETCH_HEAD
-gh pr view 123 --comments
-git diff origin/main...HEAD                                 # the change since the branch point
+claude -n review-pr123                                      # then type: /code-review 123
+codex review --base origin/main                             # or Codex
 git fetch origin pull/123/head && git range-diff HEAD...FETCH_HEAD   # after a new push: what changed
-gh pr review 123 --approve                                  # or --request-changes -b "..."
 git switch --detach origin/main                             # park the worktree when done
 ```
 
-在 Claude Code 里，`/code-review` 会让 agent 审当前分支。
+stack 里的 PR 要和它下面那一层比，Codex 就用 `--base origin/<base-branch>`。
+
+最后由你下结论：
+
+```bash
+gh pr view 123 --comments
+gh pr diff 123                                              # the whole change, against the PR's base
+gh pr review 123 --approve                                  # or --request-changes -b "..."
+```
 
 ## 来源
 
@@ -43,4 +60,4 @@ git switch --detach origin/main                             # park the worktree 
 
 Google 的指南采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 协议。
 
-<!-- docs-sync: 9736c077b195da0f7a2a870beedb05a69dc175412906d59a3951e76e98f88e33 -->
+<!-- docs-sync: 1debeaa2f967f3260b00b17c942bd3d3465c5e6fdc37300750ed08a20e1343ab -->

@@ -56,7 +56,7 @@ claude -n feat-new-task
 
 ## 常驻的 worktree
 
-- `review-pr`：审别人的 PR，用法见 [Code review](code-review.zh-CN.md)。
+- `review-pr`：审别人的 PR，以及 stack 里不在顶层的 PR，用法见 [Code review](code-review.zh-CN.md)。
 - `playtest`：手动试玩某个版本。它是 detached 的，只测不改；发现 bug 先记下版本，再从 `origin/main` 开一个 fix 的 worktree 去修。
 
 ## 任务做完
@@ -69,4 +69,4 @@ PR 合并后，删掉它的 worktree、分支和 tmux 会话。agent 的会话�
 
 - 这种目录布局是社区惯例，git 和 GitHub 官方没有规定。
 
-<!-- docs-sync: b4ac2c5068be618f5b3b31e0933cf1142a4ea3e5c8adac34a3c63b7ad9466d67 -->
+<!-- docs-sync: d3d8384972958363da3e1a98234c45e866f74a94bb009693a704d88b9d4898d8 -->

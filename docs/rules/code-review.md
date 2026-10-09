@@ -18,21 +18,38 @@ For agents: [review-pr.md](../../prompts/repository/review-pr.md) has an agent r
 
 ## Key commands
 
-Keep one detached worktree for reviewing, next to your other worktrees. It takes no branch, so you can't commit to someone else's by accident.
+`gh pr review` doesn't review anything itself. It only posts your verdict to GitHub: approve, request changes, or comment. You read the code. Before you do, a new agent session can make a first pass; don't use the session that wrote the code. In Claude Code, `/code-review <N>` with the PR number reviews the whole PR. In Codex, `codex review --base <base>` reviews the current branch against the base.
+
+Your own PR: open a new session in the PR's own worktree.
+
+```bash
+cd ../feat-new-task
+claude -n review-pr123                                      # then type: /code-review 123
+codex review --base origin/main                             # or Codex
+```
+
+Someone else's PR, or a PR below the top of a stack: these have no worktree of their own, so use the standing `review-pr`. It is detached and takes no branch, so you can't commit to someone else's by accident.
 
 ```bash
 git worktree add --detach ../review-pr origin/main          # once, from the main checkout
 
 cd ../review-pr
 git fetch origin pull/123/head && git switch --detach FETCH_HEAD
-gh pr view 123 --comments
-git diff origin/main...HEAD                                 # the change since the branch point
+claude -n review-pr123                                      # then type: /code-review 123
+codex review --base origin/main                             # or Codex
 git fetch origin pull/123/head && git range-diff HEAD...FETCH_HEAD   # after a new push: what changed
-gh pr review 123 --approve                                  # or --request-changes -b "..."
 git switch --detach origin/main                             # park the worktree when done
 ```
 
-In Claude Code, `/code-review` runs an agent review of the current branch.
+Compare a PR in a stack with the layer below it; with Codex, that is `--base origin/<base-branch>`.
+
+Then you give the verdict:
+
+```bash
+gh pr view 123 --comments
+gh pr diff 123                                              # the whole change, against the PR's base
+gh pr review 123 --approve                                  # or --request-changes -b "..."
+```
 
 ## Sources
 
