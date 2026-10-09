@@ -1,5 +1,6 @@
 # The checks of this repository, on every push and pull request: each doc matches its
-# translation, the scripts pass their tests, and no commit carries AI or agent attribution.
+# translation, the scripts and templates pass their tests, and no commit carries AI or agent
+# attribution.
 # This repository commits to main directly and uses no versions; see CONTRIBUTING.md.
 #
 # Event data reaches the scripts only through `env:`. Never interpolate `github.event.*` into a
@@ -36,6 +37,16 @@ jobs:
         with:
           node-version: 24
       - run: node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+
+  workstation:
+    name: Workstation scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Syntax
+        run: for f in templates/workstation/*.sh; do bash -n "$f"; done
+      - name: Acceptance test of the statusline and the git prompt
+        run: SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
 
   commits:
     name: Commits
