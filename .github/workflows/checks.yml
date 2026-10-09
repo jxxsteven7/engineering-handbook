@@ -1,0 +1,59 @@
+# The checks of this repository, on every push and pull request: each doc matches its
+# translation, the scripts pass their tests, and no commit carries AI or agent attribution.
+# This repository commits to main directly and uses no versions; see CONTRIBUTING.md.
+#
+# Event data reaches the scripts only through `env:`. Never interpolate `github.event.*` into a
+# `run:` script, which would allow script injection.
+
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  docs-sync:
+    name: Docs sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Each doc matches its translation
+        run: node scripts/check-docs-sync.mjs
+
+  scripts:
+    name: Script tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+
+  commits:
+    name: Commits
+    runs-on: ubuntu-latest
+    env:
+      BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Commit format, English, no agent attribution
+        run: |
+          # The first push of a branch has no "before"; check only its last commit then.
+          if [ -z "$BASE" ] || [ -z "${BASE//0/}" ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            BASE="$HEAD_SHA^"
+          fi
+          node templates/repo/scripts/check-commits.mjs range "$BASE..$HEAD_SHA"

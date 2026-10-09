@@ -1,0 +1,11 @@
+#!/bin/sh
+# This repository commits to main directly and uses no versions (see CONTRIBUTING.md). The hook
+# checks the subject format, English, and that there is no AI or agent attribution, with the
+# checker that templates/repo/ ships for other repositories.
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "The commit-msg hook needs Node.js 22 or later to check your commit message." >&2
+  exit 1
+fi
+
+exec node templates/repo/scripts/check-commits.mjs msg --unversioned "$1"
