@@ -1,0 +1,4 @@
+# Ask the repository maintainer to review every change by default. Replace the username with yours.
+# As the team grows, assign owners per directory, for example:
+# /docs/  @docs-owner
+*  @your-github-username

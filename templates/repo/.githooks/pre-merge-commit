@@ -1,0 +1,5 @@
+#!/bin/sh
+# Git runs this hook instead of pre-commit for the commit that `git merge` or `git pull` makes.
+# Refuse it on main in the same way.
+
+exec "$(dirname "$0")/pre-commit"
