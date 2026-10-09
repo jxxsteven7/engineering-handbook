@@ -47,6 +47,8 @@ jobs:
         run: for f in templates/*/*.sh .githooks/*; do bash -n "$f"; done
       - name: Acceptance test of the statusline and the git prompt
         run: SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
+      - name: Self-test of the server clipboard script
+        run: bash templates/workstation/selftest-clipboard.sh
       - name: Self-test of the overnight review scripts
         run: bash templates/overnight/selftest.sh
 

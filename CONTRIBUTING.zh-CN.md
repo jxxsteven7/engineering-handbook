@@ -49,6 +49,7 @@ node scripts/check-docs-sync.mjs --status
 node scripts/check-docs-sync.mjs
 node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
 SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
+bash templates/workstation/selftest-clipboard.sh
 bash templates/overnight/selftest.sh
 ```
 
@@ -57,4 +58,4 @@ bash templates/overnight/selftest.sh
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/rules/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 1edc76f6b9d898a02b55c0d32c9f7c268ec30eebe8b0035a5584455a2b1e1ab1 -->
+<!-- docs-sync: 3ea03b881cce8a6005551150a78f3a832a4dcedef34bdc2bad9ec607a85f8b80 -->
