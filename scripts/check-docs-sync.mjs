@@ -24,6 +24,9 @@
 //   node scripts/check-docs-sync.mjs --update           check, then record new stamps for every
 //                                                       pair whose structure matches
 //   node scripts/check-docs-sync.mjs --update <file>... the same, for the pairs of these files
+//   node scripts/check-docs-sync.mjs --status           say what needs syncing: for each pair, which
+//                                                       side changed since the last commit in which
+//                                                       the pair was in sync (see the sync-docs skill)
 //
 // Exit codes: 0 in sync, 1 out of sync, 2 usage error.
 
@@ -33,9 +36,9 @@ import { existsSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-// Files that are written in English only: instructions and prompts for agents, files to copy into
-// other repositories, and GitHub's own files.
-export const EXEMPT = [/^AGENTS\.md$/, /^CLAUDE\.md$/, /^prompts\//, /^templates\//, /^\.github\//];
+// Files that are written in English only: instructions, prompts and skills for agents, files to
+// copy into other repositories, and GitHub's own files.
+export const EXEMPT = [/^AGENTS\.md$/, /^CLAUDE\.md$/, /^prompts\//, /^templates\//, /^\.claude\//, /^\.github\//];
 const ZH_SUFFIX = '.zh-CN.md';
 const STAMP_LINE = /^<!-- docs-sync: ([0-9a-f]{64}) -->[ \t]*$/gm;
 const SWITCHER_LINES = 5;
@@ -320,25 +323,87 @@ const read = (root, path) => readFileSync(join(root, path), 'utf8').replace(/\r\
 export function findPairs(files) {
   const problems = [];
   const pairs = [];
+  const missing = []; // [existing file, its missing counterpart]
   const set = new Set(files);
   for (const path of files) {
     if (EXEMPT.some((pattern) => pattern.test(path))) continue;
     if (isZh(path)) {
-      if (!set.has(enPathOf(path))) problems.push(`${path} has no English original, ${enPathOf(path)}.`);
+      if (!set.has(enPathOf(path))) {
+        problems.push(`${path} has no English original, ${enPathOf(path)}.`);
+        missing.push([path, enPathOf(path)]);
+      }
     } else if (!set.has(zhPathOf(path))) {
       problems.push(`${path} has no Chinese translation, ${zhPathOf(path)}.`);
+      missing.push([path, zhPathOf(path)]);
     } else {
       pairs.push([path, zhPathOf(path)]);
     }
   }
-  return { pairs, problems };
+  return { pairs, problems, missing };
+}
+
+// The file as it was in a commit, or null when it didn't exist there.
+function fileAt(root, sha, path) {
+  const result = spawnSync('git', ['show', `${sha}:${path}`], { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  return result.status === 0 ? result.stdout.replace(/\r\n/g, '\n') : null;
+}
+
+// The newest commit in which the pair was in sync (both files present and the stamp right),
+// with both texts as they were there; null when there is none.
+export function lastSynced(root, en, zh) {
+  const log = spawnSync('git', ['log', '--format=%H', '--', en, zh], { cwd: root, encoding: 'utf8' });
+  if (log.status !== 0) return null;
+  for (const sha of log.stdout.split('\n').filter(Boolean)) {
+    const enText = fileAt(root, sha, en);
+    const zhText = fileAt(root, sha, zh);
+    if (enText === null || zhText === null) continue;
+    const { body, recorded } = splitStamp(zhText);
+    if (recorded && recorded === stampFor(enText, body)) return { sha, enText, zhBody: body };
+  }
+  return null;
+}
+
+// What needs syncing, one line per pair, for people and for the sync-docs skill.
+function status(root) {
+  const { pairs, missing } = findPairs(markdownFiles(root));
+  const lines = missing.map(([have, want]) => `new: ${have} has no counterpart yet; write ${want} from it`);
+  for (const [en, zh] of pairs) {
+    const enText = read(root, en);
+    const { body, recorded } = splitStamp(read(root, zh));
+    if (recorded === stampFor(enText, body)) continue;
+    const base = lastSynced(root, en, zh);
+    if (!base) {
+      lines.push(`unknown: ${en} and ${zh} were never in sync in a commit; compare them in full`);
+      continue;
+    }
+    const enChanged = enText.trimEnd() !== base.enText.trimEnd();
+    const zhChanged = body !== base.zhBody;
+    const short = base.sha.slice(0, 7);
+    if (zhChanged && !enChanged) lines.push(`zh changed: ${zh} since ${short}; update ${en} (git diff ${short} -- ${zh})`);
+    else if (enChanged && !zhChanged) lines.push(`en changed: ${en} since ${short}; update ${zh} (git diff ${short} -- ${en})`);
+    else if (enChanged && zhChanged) lines.push(`both changed: ${en} and ${zh} since ${short}; ask which one is right`);
+    else lines.push(`stamp only: ${zh}; the texts match ${short}, so record the stamp again`);
+  }
+  if (!lines.length) {
+    console.log('check-docs-sync: everything is in sync.');
+    return 0;
+  }
+  for (const line of lines) console.log(line);
+  return 1;
 }
 
 export function main(argv, root) {
+  if (argv[0] === '--status') {
+    if (argv.length > 1) {
+      console.error('Usage: node scripts/check-docs-sync.mjs --status');
+      return 2;
+    }
+    return status(root);
+  }
   const update = argv[0] === '--update';
   const only = update ? argv.slice(1) : argv;
   if (!update && only.length) {
-    console.error('Usage: node scripts/check-docs-sync.mjs [--update [<file>...]]');
+    console.error('Usage: node scripts/check-docs-sync.mjs [--update [<file>...] | --status]');
     return 2;
   }
   const wanted = new Set(
@@ -379,7 +444,8 @@ export function main(argv, root) {
     if (stale.length) {
       console.error(
         'Bring both languages in line, then record the stamp with:\n\n' +
-          '  node scripts/check-docs-sync.mjs --update <file>\n',
+          '  node scripts/check-docs-sync.mjs --update <file>\n\n' +
+          'In Claude Code, /sync-docs does both. node scripts/check-docs-sync.mjs --status shows which side changed.\n',
       );
     }
     return 1;

@@ -183,3 +183,63 @@ describe('in a repository', () => {
     assert.match(text, /a\.zh-CN\.md links to missing\.md, which does not exist/);
   });
 });
+
+describe('--status', () => {
+  const directories = [];
+  after(() => directories.forEach((directory) => rmSync(directory, { recursive: true, force: true })));
+
+  const B_EN = '# B\n\n**English** | [简体中文](b.zh-CN.md)\n';
+  const B_ZH = '# B\n\n[English](b.md) | **简体中文**\n';
+
+  function syncedRepo() {
+    const root = mkdtempSync(join(tmpdir(), 'check-docs-sync-status-'));
+    directories.push(root);
+    const git = (...args) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'core.hooksPath=/dev/null', ...args], { cwd: root });
+    git('init', '-q');
+    writeFileSync(join(root, 'a.md'), EN);
+    writeFileSync(join(root, 'a.zh-CN.md'), ZH);
+    writeFileSync(join(root, 'b.md'), B_EN);
+    writeFileSync(join(root, 'b.zh-CN.md'), B_ZH);
+    capture(() => main(['--update'], root));
+    git('add', '-A');
+    git('commit', '-q', '-m', 'docs: sync');
+    return root;
+  }
+
+  function capture(fn) {
+    const lines = [];
+    const { log, error } = console;
+    console.log = console.error = (text) => lines.push(text);
+    try {
+      return { code: fn(), text: lines.join('\n') };
+    } finally {
+      Object.assign(console, { log, error });
+    }
+  }
+
+  test('reports nothing when everything is in sync', () => {
+    const root = syncedRepo();
+    const { code, text } = capture(() => main(['--status'], root));
+    assert.equal(code, 0);
+    assert.match(text, /everything is in sync/);
+  });
+
+  test('says which side changed since the last synced commit', () => {
+    const root = syncedRepo();
+    writeFileSync(join(root, 'a.zh-CN.md'), readFileSync(join(root, 'a.zh-CN.md'), 'utf8').replace('注意。', '请注意。'));
+    let { code, text } = capture(() => main(['--status'], root));
+    assert.equal(code, 1);
+    assert.match(text, /^zh changed: a\.zh-CN\.md since [0-9a-f]{7}; update a\.md/);
+
+    writeFileSync(join(root, 'a.md'), EN.replace('A note.', 'Note this.'));
+    ({ text } = capture(() => main(['--status'], root)));
+    assert.match(text, /^both changed: a\.md and a\.zh-CN\.md/);
+  });
+
+  test('reports a document without a counterpart', () => {
+    const root = syncedRepo();
+    writeFileSync(join(root, 'c.zh-CN.md'), '# C\n');
+    const { text } = capture(() => main(['--status'], root));
+    assert.match(text, /new: c\.zh-CN\.md has no counterpart yet; write c\.md from it/);
+  });
+});
