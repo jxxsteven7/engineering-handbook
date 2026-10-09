@@ -1,0 +1,5 @@
+# One line per branch to watch: the branch, the review effort, and its development prompt in
+# PLANS_DIR. Edit it any time; the watcher reads it again on every round.
+# branch                  review effort   development prompt
+feat/room-settings        xhigh           01-room-settings.md
+fix/reconnect             high            02-reconnect.md

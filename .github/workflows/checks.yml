@@ -38,15 +38,17 @@ jobs:
           node-version: 24
       - run: node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
 
-  workstation:
-    name: Workstation scripts
+  shell:
+    name: Shell scripts
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - name: Syntax
-        run: for f in templates/workstation/*.sh; do bash -n "$f"; done
+        run: for f in templates/*/*.sh .githooks/*; do bash -n "$f"; done
       - name: Acceptance test of the statusline and the git prompt
         run: SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
+      - name: Self-test of the overnight review scripts
+        run: bash templates/overnight/selftest.sh
 
   commits:
     name: Commits

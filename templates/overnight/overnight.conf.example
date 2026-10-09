@@ -1,0 +1,24 @@
+# Settings for watch.sh and run-review.sh. Copy this file to overnight.conf next to them
+# and fill it in. It is sourced by bash, so $HOME works.
+
+# The main clone of the repository; the PR worktrees sit next to it.
+REPO_DIR="$HOME/code/<repo>/<repo>"
+# owner/name on GitHub. Leave empty to read it from the main clone.
+GH_REPO=""
+# Where the development prompts named in branches.txt live.
+PLANS_DIR="$HOME/code/<repo>/plans"
+
+# The review runs in a fresh session; the fix resumes that session on a stronger model.
+REVIEW_MODEL="opus"
+FIX_MODEL="fable"
+FIX_EFFORT="xhigh"
+
+# The checks the fix session runs before it pushes, written as you would type them.
+CHECKS="npm run lint && npm test"
+# The language of the review reports and summaries.
+LANGUAGE="English"
+
+# A PR is reviewed once its head hasn't moved for STABLE_MIN minutes, so the development
+# session has finished pushing. The watcher looks every POLL_SEC seconds.
+STABLE_MIN=15
+POLL_SEC=300
