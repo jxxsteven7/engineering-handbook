@@ -16,7 +16,7 @@
 3. **每个任务只有一个地址。** 一个任务对应一个分支、一个 worktree、一个终端会话、一个 agent 会话，名字全部一致。主 checkout 只用来同步 `main`，谁都不在里面干活。
 4. **一个改动只做一件事。** 一个 PR 只做一件自成一体的事，小到一次就能审完。它以一个带版本号的 squash commit 进入 `main`。
 5. **关口由人把守。** agent 交出计划后就停下，等人批准。它从不合并，也从不往 `main` 推送。批准计划和合并 PR 这两件事始终由人来做。
-6. **换一双眼睛审查。** 每个改动都由作者以外的人审查。没写过这段代码的新 agent 会话可以先过一遍。agent 对自己工作的结论不算审查。
+6. **换一双眼睛审查。** 每个改动都由作者以外的人审查，默认是人来审。计划里标明可以交给 agent 的任务，由一个没写过这段代码的新 agent 会话审查和修复，并且 CI 要通过。不管哪种，合并都由人来做，写代码的会话从不给自己的工作下结论。
 7. **让机器来执行规则。** 分支保护、git hook 和 CI 会拦住人和 agent 忘掉的事。只写在文档里的规则，迟早有人违反。
 8. **做完 = 验证过。** 测试跑过，程序启动过，输出有人看过。"应该没问题"不算做完。
 9. **写在下一个会话会去找的地方。** 计划写进文件，决定写进 PR 描述，后续事项开成 issue。agent 的 memory 只留对所有任务都适用的经验。
@@ -29,7 +29,7 @@
 |---|---|---|
 | `docs/` | 人 | 原则和最重要的命令，中英双语。从这里开始读。 |
 | `prompts/` | agent | 交给 agent 的详细分步说明，让它按同一套规则配置环境或完成任务。只有英文。 |
-| `templates/` | 你的电脑和仓库 | 要安装或拷贝的文件：工作站脚本，以及给仓库用的 hook、检查脚本和 CI workflow。 |
+| `templates/` | 你的电脑和仓库 | 要拷到别处才能运行的真实文件：脚本、hook、CI workflow、空白的计划模板。一般不用你手动拷，prompt 会告诉 agent 拿哪些。 |
 | `scripts/`、`.githooks/`、`.github/` | 本仓库 | 本仓库自己的检查。 |
 
 doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个细节都写清楚，保证每次结果一样。`docs/` 和 `prompts/` 按同样的主题分文件夹，每篇 doc 都链接到对应的 prompt，每个 prompt 都写明它遵循哪篇 doc。把 prompt 交给 agent 之前先读对应的 doc，这样你知道 agent 接下来要做什么。
@@ -51,6 +51,13 @@ doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个�
 
 给你电脑用的文件：[templates/workstation/](templates/workstation/)。
 
+### 工作区：每项工作放在哪里
+
+| 文档 | 给 agent 的 prompt |
+|---|---|
+| [仓库和 worktree](docs/workspace/repos-and-worktrees.zh-CN.md)：目录布局、命名、开仓库、开始和结束一个任务 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
+| [Git 救急](docs/workspace/git-first-aid.zh-CN.md)：rebase 冲突和常见意外 | |
+
 ### 仓库：改动怎么进入 main
 
 | 文档 | 给 agent 的 prompt |
@@ -62,11 +69,18 @@ doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个�
 
 给你仓库用的文件：[templates/repo/](templates/repo/)。
 
+### Agent：规划、运行和监督
+
+| 文档 | 给 agent 的 prompt |
+|---|---|
+| [并行开发和夜间自动审查](docs/agents/overnight.zh-CN.md)（试行）：脚本盯 PR，新会话审查，更强的模型修复，人来合并 | [overnight.md](prompts/agents/overnight.md) |
+
+夜间流程用的文件：[templates/overnight/](templates/overnight/)。
+
 ### 接下来要写
 
 - `setup/`：给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory）。
-- `workspace/`：目录布局和命名、worktree、任务完成后的清理、git 救急。
-- `agents/`：规划、运行一个 agent 会话、并行开发和夜间审查。
+- `agents/`：和 agent 一起做规划，运行单个开发会话。
 
 ## 快速上手
 
@@ -94,4 +108,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: 1c32644f82a050695b8490e16cc82318e21aa2d94668789ec87da46970e7b157 -->
+<!-- docs-sync: b4f542d126674420a908763deae7f51cddde772071cdf5992842f2925d3219d8 -->

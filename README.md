@@ -16,7 +16,7 @@ A good agent knows when to act, when to stop, and where to work. It learns all t
 3. **Every task has one address.** One task is one branch, one worktree, one terminal session and one agent session, all with the same name. The main checkout only syncs `main`, and nobody works in it.
 4. **One change, one purpose.** A pull request does one self-contained thing and is small enough to review in one sitting. It lands on `main` as a single squash commit with a version number.
 5. **People hold the gates.** An agent stops after proposing a plan and waits for approval. It never merges and never pushes to `main`. Approving the plan and merging stay with people.
-6. **Review with fresh eyes.** A person other than the author reviews every change. A new agent session that didn't write the code can go over it first. An agent's verdict on its own work doesn't count as review.
+6. **Review with fresh eyes.** Someone other than the author reviews every change. By default that is a person. For a task the plan marks as safe to leave to agents, a new agent session that didn't write the code reviews and fixes it, and CI must pass. Either way a person merges, and the session that wrote the code never judges its own work.
 7. **Let machines enforce the rules.** Branch protection, git hooks and CI catch what people and agents forget. A rule that exists only in a document will get broken.
 8. **Done means verified.** The tests ran, the program started, someone looked at the output. "It should work" doesn't count.
 9. **Write things down where the next session will look.** Plans go in files, decisions in the PR description, follow-ups in issues. Agent memory keeps only lessons that apply to every task.
@@ -29,7 +29,7 @@ A good agent knows when to act, when to stop, and where to work. It learns all t
 |---|---|---|
 | `docs/` | People | The principles and the commands that matter most, in English and Chinese. Start here. |
 | `prompts/` | Agents | Detailed step-by-step instructions you give an agent so it sets something up or does a task by the same rules. In English only. |
-| `templates/` | Your machines and repositories | Files to install or copy: the workstation scripts, and hooks, checks and CI workflows for repositories. |
+| `templates/` | Your machines and repositories | Real files to copy elsewhere and run: scripts, hooks, CI workflows, blank plans. You rarely copy them by hand; the prompts tell the agent which ones to take. |
 | `scripts/`, `.githooks/`, `.github/` | This repository | Its own checks. |
 
 A doc tells a person what to do and why, briefly. A prompt has an agent do it, with every detail spelled out so the result is the same each time. `docs/` and `prompts/` use the same topic folders, every doc links to its prompts, and every prompt names the doc it follows. Read the doc before you give its prompt to an agent, so you know what the agent is about to do.
@@ -51,6 +51,13 @@ A doc tells a person what to do and why, briefly. A prompt has an agent do it, w
 
 Files for your machine: [templates/workstation/](templates/workstation/).
 
+### Workspace: where each piece of work lives
+
+| Doc | Prompts for agents |
+|---|---|
+| [Repositories and worktrees](docs/workspace/repos-and-worktrees.md): layout, names, opening a repository, starting and finishing a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
+| [Git first aid](docs/workspace/git-first-aid.md): rebase conflicts and common accidents | |
+
 ### Repository: how a change reaches main
 
 | Doc | Prompts for agents |
@@ -62,11 +69,18 @@ Files for your machine: [templates/workstation/](templates/workstation/).
 
 Files for your repository: [templates/repo/](templates/repo/).
 
+### Agents: planning, running and supervising them
+
+| Doc | Prompts for agents |
+|---|---|
+| [Parallel development and overnight review](docs/agents/overnight.md) (trial): a script watches the PRs, a new session reviews, a stronger model fixes, a person merges | [overnight.md](prompts/agents/overnight.md) |
+
+Files for the overnight round: [templates/overnight/](templates/overnight/).
+
 ### Coming next
 
 - `setup/`: instructions for agents (`AGENTS.md`, `CLAUDE.md`, memory).
-- `workspace/`: directory layout and names, worktrees, cleaning up after a task, git first aid.
-- `agents/`: planning, running an agent session, parallel development and overnight review.
+- `agents/`: planning with an agent, and running a single development session.
 
 ## Quick start
 

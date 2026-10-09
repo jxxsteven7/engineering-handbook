@@ -14,7 +14,7 @@ For agents: [review-pr.md](../../prompts/repository/review-pr.md) has an agent r
 - Mark optional comments `nit:`. Comment on the code, not the person, and say why.
 - Answer within one working day.
 - The author answers for every line an agent wrote, and reads and runs it before asking for review.
-- An agent review is a useful first pass, in a new session that didn't write the code. It never replaces human review, and agents never approve or merge.
+- An agent review, in a new session that didn't write the code, is a useful first pass. It replaces a person's review only for tasks the plan marks that way, as in [overnight review](../agents/overnight.md). Agents never approve or merge.
 
 ## Key commands
 

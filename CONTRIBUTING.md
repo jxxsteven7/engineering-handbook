@@ -49,6 +49,7 @@ node scripts/check-docs-sync.mjs --status
 node scripts/check-docs-sync.mjs
 node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
 SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
+bash templates/overnight/selftest.sh
 ```
 
 ## Working with agents
