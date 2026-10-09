@@ -64,7 +64,7 @@ tmux kill-session -t review-pr<N> && rm -f ~/code/<repo>/plans/autoreview/state/
 - 按依赖顺序合并。每合并一个，其余会冲突的 PR 就 rebase 一次。
 - 计划里写"人审"的 PR：VERDICT 只是参考，自己读 diff、看截图、亲手跑，再批准。
 - 写"agent 审"的 PR：看 summary 和 CI，没问题就合并。合并永远由人来点。
-- 合并后按[仓库和 worktree](../workspace/repos-and-worktrees.zh-CN.md) 收尾。`plans/` 里这个 PR 的文件可以留作记录。
+- 合并后按[工作区](workspace.zh-CN.md)收尾。`plans/` 里这个 PR 的文件可以留作记录。
 
 ## 风险
 
@@ -85,4 +85,4 @@ tmux kill-session -t review-pr<N> && rm -f ~/code/<repo>/plans/autoreview/state/
 - 合并一个 PR 后，自动给其余的 PR rebase 并重跑检查。
 - 跑完时推送通知到手机。
 
-<!-- docs-sync: e9f1adc8264fc00b68f3c85c11b4009e4b17756c80e37d94e0a6325e6ee69368 -->
+<!-- docs-sync: 0617e8b7d53bee0132411d5a599ee95c6afee5ec05eebbcd1ef85217aa7b70f5 -->

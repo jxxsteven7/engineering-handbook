@@ -1,6 +1,6 @@
 # Set up a workstation for coding agents
 
-Follows: `docs/setup/workstation.md` in the Agentic Engineering Handbook.
+Follows: `docs/tools/workstation.md` and `docs/tools/ssh-and-github.md` in the Agentic Engineering Handbook.
 
 You are setting up the machine you run on, for the user, so that every Claude Code session starts with the same tools, view and rules. The handbook is the repository that contains this file; its root is two directories above this file, and the scripts are in `templates/workstation/` there. Read `templates/workstation/install.sh` and `templates/workstation/accept.sh` before you start.
 
@@ -19,7 +19,7 @@ The work is done when `accept.sh` ends with a line `== N PASS, 0 FAIL ==`.
 ## Hard rules
 
 1. **Never use sudo.** You don't have the password. When a system package is missing, give the user the exact command and tell them to run it in the input box with a `!` prefix, so the output comes back into the conversation, for example `! sudo apt install -y jq xclip`.
-2. **Keys, tokens and logins belong to the user.** Never create an SSH key, never read or print a private key or token (including the contents of `~/.claude/.credentials.json`), and never run a login flow for the user. Give them the commands from the doc and wait. You may check whether something exists, for example `test -s ~/.claude/.credentials.json`, without reading it.
+2. **Keys, tokens and logins belong to the user.** Never create an SSH key, never read or print a private key or token (including the contents of `~/.claude/.credentials.json`), and never run a login flow for the user. Give them the commands from the docs and wait. You may check whether something exists, for example `test -s ~/.claude/.credentials.json`, without reading it.
 3. **Install the scripts as they are.** Don't rewrite, "improve" or reformat `statusline.sh` or `bash_git_prompt.sh`: no changes to text, colours, labels, separators or order. The only allowed changes are the porting differences listed at the end, and they must not change what the scripts output.
 4. **Change only what this task owns.** In `~/.claude/settings.json`, only `statusLine`, `permissions.defaultMode`, `skipDangerousModePermissionPrompt`, `tui` and `attribution`; every other key stays, including `permissions.allow` and `permissions.deny`. In `~/.bashrc`, only append the hook (and, over ssh, the `COLORTERM` fix) at the end; never touch the lines the distribution put there, including its `PS1`.
 5. **Finish with evidence.** Run the acceptance test and report its last line. If any check fails, fix the cause and run it again until it passes. Never report "it should work".
@@ -46,7 +46,7 @@ For each missing item, give the exact command and wait until the user says it is
 
 - system packages: `! sudo apt install -y git tmux jq curl gh` plus `xclip` on X11 or `wl-clipboard` on Wayland;
 - git identity: ask for the name and email, then set them with `git config --global user.name "<name>"` and `git config --global user.email "<email>"`;
-- the SSH key: the commands in the doc's "SSH key for GitHub" section. Once the user has created the key and added it on GitHub, you may add the `Host github.com` block to `~/.ssh/config` if it is missing, then `chmod 600 ~/.ssh/config`, and run `ssh -T git@github.com` to confirm;
+- the SSH key: the commands in `docs/tools/ssh-and-github.md`. Once the user has created the key and added it on GitHub, you may add the `Host github.com` block to `~/.ssh/config` if it is missing, then `chmod 600 ~/.ssh/config`, and run `ssh -T git@github.com` to confirm;
 - `! gh auth login`;
 - Claude Code: `curl -fsSL https://claude.ai/install.sh | bash`, without sudo; then a new terminal, `claude`, log in, `/exit`;
 - Codex, if wanted: `npm install -g @openai/codex` (needs Node.js), then `codex` and sign in.

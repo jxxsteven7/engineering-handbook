@@ -45,64 +45,48 @@
 
 | 文件夹 | 给谁 | 里面是什么 |
 |---|---|---|
-| `docs/` | 人 | 原则和最重要的命令，中英双语。从这里开始读。 |
+| `docs/rules/` | 人 | 规则，也就是这套方法本身：做什么、为什么，只留最能说明规则的命令。中英双语，按下面目录的顺序读一遍。 |
+| `docs/tools/` | 人 | 工具用法：工作站、SSH、git 这些具体怎么配、怎么用。中英双语，用到时查。 |
 | `prompts/` | agent | 交给 agent 的详细分步说明，让它按同一套规则配置环境或完成任务。只有英文。 |
 | `templates/` | 你的电脑和仓库 | 要拷到别处才能运行的真实文件：脚本、hook、CI workflow、空白的计划模板。一般不用你手动拷，prompt 会告诉 agent 拿哪些。 |
 | `scripts/`、`.githooks/`、`.github/` | 本仓库 | 本仓库自己的检查。 |
 
-doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个细节都写清楚，保证每次结果一样。`docs/` 和 `prompts/` 按同样的主题分文件夹，每篇 doc 都链接到对应的 prompt，每个 prompt 都写明它遵循哪篇 doc。把 prompt 交给 agent 之前先读对应的 doc，这样你知道 agent 接下来要做什么。
-
-| 主题 | 回答的问题 |
-|---|---|
-| `setup/` | 我的电脑和 agent 怎么配置？ |
-| `workspace/` | 每项工作放在哪里？ |
-| `repository/` | 一个改动怎么进入 `main`？ |
-| `agents/` | 怎么给 agent 规划工作、运行它们、让它们通宵干活？ |
+文档简短地告诉人做什么、为什么。prompt 让 agent 去做，每个细节都写清楚，保证每次结果一样。每篇文档都链接到对应的 prompt，每个 prompt 都写明它遵循哪篇文档。把 prompt 交给 agent 之前先读对应的文档，这样你知道 agent 接下来要做什么。
 
 ## 目录
 
-### 配置：电脑和 agent
+### 规则：按顺序读
 
 | 文档 | 给 agent 的 prompt |
 |---|---|
-| [配置工作站](docs/setup/workstation.zh-CN.md)：系统包、git、SSH、登录、statusline、git 提示符、权限 | [workstation.md](prompts/setup/workstation.md) |
+| [工作区](docs/rules/workspace.zh-CN.md)：一个任务一个 worktree、目录布局、命名、任务的开始和收尾 | [start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
+| [保护 main](docs/rules/protect-main.zh-CN.md)：分支保护、hook 和 CI | [set-up-repo.md](prompts/repository/set-up-repo.md) |
+| [版本与发布](docs/rules/versioning.zh-CN.md)：每个合并的 PR 一个版本号 | [set-up-repo.md](prompts/repository/set-up-repo.md) |
+| [Commit 与 PR](docs/rules/commits-and-prs.zh-CN.md)：小改动、清楚的标题、stack | [open-pr.md](prompts/repository/open-pr.md) |
+| [Code review](docs/rules/code-review.zh-CN.md)：什么时候批准、看什么 | [review-pr.md](prompts/repository/review-pr.md) |
+| [并行开发和夜间自动审查](docs/rules/overnight.zh-CN.md)（试行）：脚本盯 PR，新会话审查，更强的模型修复，人来合并 | [overnight.md](prompts/agents/overnight.md) |
+
+给你仓库用的文件：[templates/repo/](templates/repo/)。夜间流程用的文件：[templates/overnight/](templates/overnight/)。
+
+### 工具：用到时查
+
+| 文档 | 给 agent 的 prompt |
+|---|---|
+| [配置工作站](docs/tools/workstation.zh-CN.md)：系统包、git 配置、Claude Code 和 Codex、statusline、git 提示符、权限 | [workstation.md](prompts/setup/workstation.md) |
+| [SSH 和 GitHub](docs/tools/ssh-and-github.zh-CN.md)：SSH key、`~/.ssh/config`、`gh` 登录 | 没有：涉及密钥和账号，你自己做 |
+| [仓库和 worktree](docs/tools/git-repos.zh-CN.md)：开仓库的四种情况、开 worktree、任务做完后清理 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
+| [Git 救急](docs/tools/git-first-aid.zh-CN.md)：rebase 冲突和常见意外 | |
 
 给你电脑用的文件：[templates/workstation/](templates/workstation/)。
 
-### 工作区：每项工作放在哪里
-
-| 文档 | 给 agent 的 prompt |
-|---|---|
-| [仓库和 worktree](docs/workspace/repos-and-worktrees.zh-CN.md)：目录布局、命名、开仓库、开始和结束一个任务 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
-| [Git 救急](docs/workspace/git-first-aid.zh-CN.md)：rebase 冲突和常见意外 | |
-
-### 仓库：改动怎么进入 main
-
-| 文档 | 给 agent 的 prompt |
-|---|---|
-| [保护 main](docs/repository/protect-main.zh-CN.md)：分支保护、hook 和 CI | [set-up-repo.md](prompts/repository/set-up-repo.md) |
-| [版本与发布](docs/repository/versioning.zh-CN.md)：每个合并的 PR 一个版本号 | [set-up-repo.md](prompts/repository/set-up-repo.md) |
-| [Commit 与 PR](docs/repository/commits-and-prs.zh-CN.md)：小改动、清楚的标题、stack | [open-pr.md](prompts/repository/open-pr.md) |
-| [Code review](docs/repository/code-review.zh-CN.md)：什么时候批准、看什么 | [review-pr.md](prompts/repository/review-pr.md) |
-
-给你仓库用的文件：[templates/repo/](templates/repo/)。
-
-### Agent：规划、运行和监督
-
-| 文档 | 给 agent 的 prompt |
-|---|---|
-| [并行开发和夜间自动审查](docs/agents/overnight.zh-CN.md)（试行）：脚本盯 PR，新会话审查，更强的模型修复，人来合并 | [overnight.md](prompts/agents/overnight.md) |
-
-夜间流程用的文件：[templates/overnight/](templates/overnight/)。
-
 ### 接下来要写
 
-- `setup/`：给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory）。
-- `agents/`：和 agent 一起做规划，运行单个开发会话。
+- 规则：和 agent 一起做规划；运行单个开发会话；给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory 怎么分工）。
+- 工具：服务器的 SSH 配置、tmux、Claude Code 和 Codex 的会话管理。
 
 ## 快速上手
 
-**给人看。** 先读上面的原则，再读你手头这个主题的文档。
+**给人看。** 先读上面的原则，再按顺序读规则篇。工具篇用到时再查。
 
 **给 agent 用。** 把这个仓库 clone 下来，然后让 agent 读对应的 prompt：
 
@@ -126,4 +110,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: a63d945cb4cbb2a69b97453310c813a1f6fe02a31985c985ee5c56d410cd2def -->
+<!-- docs-sync: e303a6fdcbb15e9ad469b786c623257386321306a5f81b7c303152edefe6422f -->

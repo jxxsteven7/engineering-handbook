@@ -1,6 +1,6 @@
 # Commit your work and open a pull request
 
-Follows: `docs/repository/commits-and-prs.md` in the Agentic Engineering Handbook.
+Follows: `docs/rules/commits-and-prs.md` in the Agentic Engineering Handbook.
 
 Use this while you make a change in a repository whose `main` is protected: one branch per change, commit subjects and PR titles `<type>: <summary>`, squash merge, versions added by CI. Where the repository's own `AGENTS.md` or `CONTRIBUTING.md` says something more specific, follow the repository.
 

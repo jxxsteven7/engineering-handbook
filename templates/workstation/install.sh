@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sets up Claude Code and the terminal on this machine, as docs/setup/workstation.md in the
+# Sets up Claude Code and the terminal on this machine, as docs/tools/workstation.md in the
 # Agentic Engineering Handbook describes:
 #
 #   A. statusline         ~/.claude/statusline.sh: model | effort | context | weekly, and branch | worktree

@@ -1,4 +1,4 @@
-# ~/.bash_git_prompt.sh, from the Agentic Engineering Handbook (docs/setup/workstation.md).
+# ~/.bash_git_prompt.sh, from the Agentic Engineering Handbook (docs/tools/workstation.md).
 # templates/workstation/install.sh installs it and hooks it into ~/.bashrc.
 #
 # Adds two fields to the bash prompt when the current directory is inside a git

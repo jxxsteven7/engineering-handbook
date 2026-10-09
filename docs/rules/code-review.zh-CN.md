@@ -14,7 +14,7 @@
 - 可改可不改的评论以 `nit:` 开头。评论针对代码，不针对人，并说明理由。
 - 一个工作日内给出回应。
 - agent 写的每一行都由作者负责，作者在请人 review 之前要自己读过、跑过。
-- 先让一个没写过这段代码的新会话审一遍，很有用。只有计划里标明的任务，它才能代替人的审查，见[夜间自动审查](../agents/overnight.zh-CN.md)。agent 从不批准、从不合并。
+- 先让一个没写过这段代码的新会话审一遍，很有用。只有计划里标明的任务，它才能代替人的审查，见[夜间自动审查](overnight.zh-CN.md)。agent 从不批准、从不合并。
 
 ## 关键命令
 
@@ -43,4 +43,4 @@ git switch --detach origin/main                             # park the worktree 
 
 Google 的指南采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 协议。
 
-<!-- docs-sync: c819b36e5d02fb8cf1d809861a209c426b16ed427e6ea4783d0305d7ff6df616 -->
+<!-- docs-sync: 9736c077b195da0f7a2a870beedb05a69dc175412906d59a3951e76e98f88e33 -->

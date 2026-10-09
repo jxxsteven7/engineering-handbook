@@ -47,35 +47,13 @@ git config --global rebase.updateRefs true   # stacked branches follow a rebase 
 git config --global rerere.enabled true      # remember conflict resolutions
 ```
 
-### 3. GitHub 的 SSH key
+### 3. SSH 和 GitHub
 
-每台机器一把 key，以机器命名，这样作废一台机器的 key 不会影响其他机器。
+按 [SSH 和 GitHub](ssh-and-github.zh-CN.md) 配好 SSH key，并登录 `gh`。
 
-```bash
-mkdir -p ~/.ssh && chmod 700 ~/.ssh
-ssh-keygen -t ed25519 -C "<you>-<machine>-github" -f ~/.ssh/github_ed25519
-cat ~/.ssh/github_ed25519.pub        # add it at https://github.com/settings/keys
-```
-
-把下面这段加进 `~/.ssh/config`：
-
-```text
-Host github.com
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/github_ed25519
-    IdentitiesOnly yes
-```
+### 4. Claude Code 和 Codex
 
 ```bash
-chmod 600 ~/.ssh/config
-ssh -T git@github.com                # "Hi <you>! You've successfully authenticated"
-```
-
-### 4. 登录
-
-```bash
-gh auth login                                    # GitHub CLI, for pull requests and checks
 curl -fsSL https://claude.ai/install.sh | bash   # Claude Code, without sudo; then open a new terminal
 claude                                           # log in, then /exit
 ```
@@ -97,4 +75,4 @@ bash ~/agentic-engineering-handbook/templates/workstation/install.sh
 - ssh 登录的机器上，安装脚本会让颜色和本地终端一致，重新登录一次即可。Ctrl+V 读的是服务器的剪贴板，所以图片要先用 `scp` 传过去，再给出路径。
 - 这些脚本是为 Ubuntu 和 bash 写的。macOS 和 zsh 的情况见 prompt 末尾的移植说明。
 
-<!-- docs-sync: c66b9d8787fb4a691def2a5eef64adb81834aa8a35c7e61429955ed48b291eeb -->
+<!-- docs-sync: 4de0f0b9fee7e099a363b45e9474aeb40aeee7a51aa47a0b166fd403bc62d9dd -->

@@ -6,7 +6,7 @@
 
 ## 改动怎么进来
 
-- 这是一个文档仓库，只有一个维护者，所以维护者直接往 `main` 提交。不开分支、不走 PR、没有版本号；[完整流程](docs/repository/protect-main.zh-CN.md)是给有人依赖的代码准备的。
+- 这是一个文档仓库，只有一个维护者，所以维护者直接往 `main` 提交。不开分支、不走 PR、没有版本号；[完整流程](docs/rules/protect-main.zh-CN.md)是给有人依赖的代码准备的。
 - 外部贡献者 fork 仓库后提 PR。
 - 有两道检查仍然保留。`commit-msg` hook 检查每条 commit 信息：`<type>: <summary>`、英文、没有 AI 或 agent 署名。每次 push，CI 检查每篇文档和译文是否一致、脚本测试是否通过、commit 里有没有署名。`pre-commit` hook 只在文档需要同步时提醒一下。
 - 里程碑（比如第一次公开）手动打 tag。
@@ -23,11 +23,11 @@ git config core.hooksPath .githooks
 
 ## 三类文件
 
-- `docs/` 给人看：原则和最重要的命令，中英双语。每篇都要短。
+- `docs/` 给人看，中英双语，分两个文件夹。`docs/rules/` 是规则，也就是这套方法本身：做什么、为什么，每条规则只留一两条最能说明它的命令。`docs/tools/` 是工具用法，比如 git、SSH 具体怎么用，用到时再查。每篇都要短。
 - `prompts/` 给 agent 用，只有英文。prompt 要把每一步、确切的命令、在哪里停下来等人、怎么检查结果都写清楚。每个 prompt 开头写明它遵循哪篇文档，文档里也链接回它。
 - `templates/` 放给别人装到自己电脑上、或者拷到自己仓库里的文件。里面每个脚本都有测试，CI 会跑。
 
-`docs/` 和 `prompts/` 共用 `setup/`、`workspace/`、`repository/`、`agents/` 这几个主题文件夹。新加的文档和 prompt 都要在 README 的目录表里链接。
+`prompts/` 按主题分文件夹：`setup/`、`workspace/`、`repository/`、`agents/`。新的规则放进 `docs/rules/`。某个工具的一组新命令放进 `docs/tools/`，用到它的规则篇再链接过去。新加的文档和 prompt 都要在 README 的目录表里链接。
 
 ## 写一篇文档
 
@@ -55,6 +55,6 @@ bash templates/overnight/selftest.sh
 ## 和 agent 一起工作
 
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
-- 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/repository/code-review.md check that this doc matches its prompt`。
+- 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/rules/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: a63e26709e327b3702789a69569d9b0b0a4ea1a4997680ebd1e30827de6351de -->
+<!-- docs-sync: 1edc76f6b9d898a02b55c0d32c9f7c268ec30eebe8b0035a5584455a2b1e1ab1 -->

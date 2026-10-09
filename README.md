@@ -45,64 +45,48 @@ Specifically, my rules and workflows cover:
 
 | Folder | For | What's in it |
 |---|---|---|
-| `docs/` | People | The principles and the commands that matter most, in English and Chinese. Start here. |
+| `docs/rules/` | People | The rules, that is, the method itself: what to do and why, with only the commands that best show each rule. In English and Chinese; read them once, in the order of the contents below. |
+| `docs/tools/` | People | How to use the tools: setting up a workstation, SSH, git. In English and Chinese; look things up when you need them. |
 | `prompts/` | Agents | Detailed step-by-step instructions you give an agent so it sets something up or does a task by the same rules. In English only. |
 | `templates/` | Your machines and repositories | Real files to copy elsewhere and run: scripts, hooks, CI workflows, blank plans. You rarely copy them by hand; the prompts tell the agent which ones to take. |
 | `scripts/`, `.githooks/`, `.github/` | This repository | Its own checks. |
 
-A doc tells a person what to do and why, briefly. A prompt has an agent do it, with every detail spelled out so the result is the same each time. `docs/` and `prompts/` use the same topic folders, every doc links to its prompts, and every prompt names the doc it follows. Read the doc before you give its prompt to an agent, so you know what the agent is about to do.
-
-| Topic | The question it answers |
-|---|---|
-| `setup/` | How do I set up my machine and my agents? |
-| `workspace/` | Where does each piece of work live? |
-| `repository/` | How does a change reach `main`? |
-| `agents/` | How do I plan work for agents, run them and let them work overnight? |
+A doc tells a person what to do and why, briefly. A prompt has an agent do it, with every detail spelled out so the result is the same each time. Every doc links to its prompts, and every prompt names the doc it follows. Read the doc before you give its prompt to an agent, so you know what the agent is about to do.
 
 ## Contents
 
-### Setup: the machine and the agents
+### Rules: read in order
 
 | Doc | Prompts for agents |
 |---|---|
-| [Set up a workstation](docs/setup/workstation.md): packages, git, SSH, logins, statusline, git prompt, permissions | [workstation.md](prompts/setup/workstation.md) |
+| [Workspace](docs/rules/workspace.md): one task per worktree, layout, names, starting and finishing a task | [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
+| [Protect main](docs/rules/protect-main.md): branch protection, hooks and CI | [set-up-repo.md](prompts/repository/set-up-repo.md) |
+| [Versioning and releases](docs/rules/versioning.md): one version per merged pull request | [set-up-repo.md](prompts/repository/set-up-repo.md) |
+| [Commits and pull requests](docs/rules/commits-and-prs.md): small changes, clear titles, stacks | [open-pr.md](prompts/repository/open-pr.md) |
+| [Code review](docs/rules/code-review.md): when to approve, what to check | [review-pr.md](prompts/repository/review-pr.md) |
+| [Parallel development and overnight review](docs/rules/overnight.md) (trial): a script watches the PRs, a new session reviews, a stronger model fixes, a person merges | [overnight.md](prompts/agents/overnight.md) |
+
+Files for your repository: [templates/repo/](templates/repo/). Files for the overnight round: [templates/overnight/](templates/overnight/).
+
+### Tools: look up when needed
+
+| Doc | Prompts for agents |
+|---|---|
+| [Set up a workstation](docs/tools/workstation.md): packages, git settings, Claude Code and Codex, statusline, git prompt, permissions | [workstation.md](prompts/setup/workstation.md) |
+| [SSH and GitHub](docs/tools/ssh-and-github.md): SSH key, `~/.ssh/config`, logging in to `gh` | None: these involve keys and accounts, so you do them yourself |
+| [Repositories and worktrees](docs/tools/git-repos.md): four ways to open a repository, creating worktrees, cleaning up after a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
+| [Git first aid](docs/tools/git-first-aid.md): rebase conflicts and common accidents | |
 
 Files for your machine: [templates/workstation/](templates/workstation/).
 
-### Workspace: where each piece of work lives
-
-| Doc | Prompts for agents |
-|---|---|
-| [Repositories and worktrees](docs/workspace/repos-and-worktrees.md): layout, names, opening a repository, starting and finishing a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
-| [Git first aid](docs/workspace/git-first-aid.md): rebase conflicts and common accidents | |
-
-### Repository: how a change reaches main
-
-| Doc | Prompts for agents |
-|---|---|
-| [Protect main](docs/repository/protect-main.md): branch protection, hooks and CI | [set-up-repo.md](prompts/repository/set-up-repo.md) |
-| [Versioning and releases](docs/repository/versioning.md): one version per merged pull request | [set-up-repo.md](prompts/repository/set-up-repo.md) |
-| [Commits and pull requests](docs/repository/commits-and-prs.md): small changes, clear titles, stacks | [open-pr.md](prompts/repository/open-pr.md) |
-| [Code review](docs/repository/code-review.md): when to approve, what to check | [review-pr.md](prompts/repository/review-pr.md) |
-
-Files for your repository: [templates/repo/](templates/repo/).
-
-### Agents: planning, running and supervising them
-
-| Doc | Prompts for agents |
-|---|---|
-| [Parallel development and overnight review](docs/agents/overnight.md) (trial): a script watches the PRs, a new session reviews, a stronger model fixes, a person merges | [overnight.md](prompts/agents/overnight.md) |
-
-Files for the overnight round: [templates/overnight/](templates/overnight/).
-
 ### Coming next
 
-- `setup/`: instructions for agents (`AGENTS.md`, `CLAUDE.md`, memory).
-- `agents/`: planning with an agent, and running a single development session.
+- Rules: planning with an agent; running a single development session; instructions for agents (how `AGENTS.md`, `CLAUDE.md` and memory divide the work).
+- Tools: SSH setup for servers, tmux, and managing Claude Code and Codex sessions.
 
 ## Quick start
 
-**For people.** Read the principles above, then the docs for the topic you're working on.
+**For people.** Read the principles above, then the rules in order. Look up the tools when you need them.
 
 **For agents.** Clone this repository, then point your agent at a prompt:
 

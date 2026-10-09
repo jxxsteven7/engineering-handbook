@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Watches the branches in branches.txt and starts one review at a time, from the Agentic
-# Engineering Handbook (docs/agents/overnight.md). Settings are in overnight.conf next to it.
+# Engineering Handbook (docs/rules/overnight.md). Settings are in overnight.conf next to it.
 # Run it in its own tmux session:
 #
 #   tmux new -d -s cc-watch ~/code/<repo>/plans/autoreview/watch.sh

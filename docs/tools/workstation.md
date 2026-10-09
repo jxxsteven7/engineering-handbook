@@ -47,35 +47,13 @@ git config --global rebase.updateRefs true   # stacked branches follow a rebase 
 git config --global rerere.enabled true      # remember conflict resolutions
 ```
 
-### 3. SSH key for GitHub
+### 3. SSH and GitHub
 
-One key per machine, named after it, so you can revoke one machine without touching the others.
+Set up an SSH key and log in to `gh` as in [SSH and GitHub](ssh-and-github.md).
 
-```bash
-mkdir -p ~/.ssh && chmod 700 ~/.ssh
-ssh-keygen -t ed25519 -C "<you>-<machine>-github" -f ~/.ssh/github_ed25519
-cat ~/.ssh/github_ed25519.pub        # add it at https://github.com/settings/keys
-```
-
-Add this to `~/.ssh/config`:
-
-```text
-Host github.com
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/github_ed25519
-    IdentitiesOnly yes
-```
+### 4. Claude Code and Codex
 
 ```bash
-chmod 600 ~/.ssh/config
-ssh -T git@github.com                # "Hi <you>! You've successfully authenticated"
-```
-
-### 4. Log in
-
-```bash
-gh auth login                                    # GitHub CLI, for pull requests and checks
 curl -fsSL https://claude.ai/install.sh | bash   # Claude Code, without sudo; then open a new terminal
 claude                                           # log in, then /exit
 ```

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Claude Code statusline, from the Agentic Engineering Handbook (docs/setup/workstation.md).
+# Claude Code statusline, from the Agentic Engineering Handbook (docs/tools/workstation.md).
 # Install it as ~/.claude/statusline.sh; templates/workstation/install.sh does that.
 #
 # Up to 2 lines:

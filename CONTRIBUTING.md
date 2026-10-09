@@ -6,7 +6,7 @@ How this repository is written and maintained. The rules apply to everyone, incl
 
 ## How changes get in
 
-- This is a docs repository with one maintainer, so the maintainer commits to `main` directly. There are no branches, pull requests or versions; the [full process](docs/repository/protect-main.md) is meant for code that others depend on.
+- This is a docs repository with one maintainer, so the maintainer commits to `main` directly. There are no branches, pull requests or versions; the [full process](docs/rules/protect-main.md) is meant for code that others depend on.
 - Outside contributors fork the repository and open a pull request.
 - Two checks still apply. The `commit-msg` hook checks every commit message: `<type>: <summary>`, English, and no AI or agent attribution. On every push, CI checks that each doc matches its translation, that the scripts pass their tests, and that no commit carries attribution. The `pre-commit` hook only reminds you when docs need syncing.
 - Milestones, such as the first public release, get a tag by hand.
@@ -23,11 +23,11 @@ git config core.hooksPath .githooks
 
 ## The three kinds of files
 
-- `docs/` is for people: the principles and the most important commands, in English and Chinese. Keep each doc short.
+- `docs/` is for people, in English and Chinese, in two folders. `docs/rules/` holds the method itself: what to do and why, with only the one or two commands that best show each rule. `docs/tools/` holds how to use the tools, such as git and SSH, to look up when you need them. Keep each doc short.
 - `prompts/` is for agents, in English only. A prompt spells out every step, the exact commands, where to stop and wait for a person, and how to check the result. Each prompt starts with the doc it follows, and the doc links back to it.
 - `templates/` holds files that people install on their machines or copy into their repositories. Every script there has tests, and CI runs them.
 
-`docs/` and `prompts/` share the topic folders `setup/`, `workspace/`, `repository/` and `agents/`. Link every new doc and prompt from the contents table in the README.
+`prompts/` is grouped by topic: `setup/`, `workspace/`, `repository/` and `agents/`. A new rule goes in `docs/rules/`. A new set of commands for a tool goes in `docs/tools/`, and the rule that needs it links there. Link every new doc and prompt from the contents table in the README.
 
 ## Writing a doc
 
@@ -55,4 +55,4 @@ bash templates/overnight/selftest.sh
 ## Working with agents
 
 - Codex reads [AGENTS.md](AGENTS.md). Claude Code reads [CLAUDE.md](CLAUDE.md), which imports `AGENTS.md`, so both follow the same rules.
-- To bring a file into a conversation, reference it with `@`, for example `@docs/repository/code-review.md check that this doc matches its prompt`.
+- To bring a file into a conversation, reference it with `@`, for example `@docs/rules/code-review.md check that this doc matches its prompt`.

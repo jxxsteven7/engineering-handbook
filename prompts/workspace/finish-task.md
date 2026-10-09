@@ -1,6 +1,6 @@
 # Clean up after a task
 
-Follows: `docs/workspace/repos-and-worktrees.md` in the Agentic Engineering Handbook.
+Follows: `docs/rules/workspace.md` and `docs/tools/git-repos.md` in the Agentic Engineering Handbook.
 
 Fill in before use: the branch or the PR number. Run this from the main clone (`~/code/<repo>/<repo>`), not from the worktree you are removing.
 
