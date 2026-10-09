@@ -25,7 +25,7 @@ git config core.hooksPath .githooks
 
 - `docs/` is for people: the principles and the most important commands, in English and Chinese. Keep each doc short.
 - `prompts/` is for agents, in English only. A prompt spells out every step, the exact commands, where to stop and wait for a person, and how to check the result. Each prompt starts with the doc it follows, and the doc links back to it.
-- `templates/` holds files that people copy into their own repositories. Every script there has tests, and CI runs them.
+- `templates/` holds files that people install on their machines or copy into their repositories. Every script there has tests, and CI runs them.
 
 `docs/` and `prompts/` share the topic folders `setup/`, `workspace/`, `repository/` and `agents/`. Link every new doc and prompt from the contents table in the README.
 
@@ -45,6 +45,7 @@ git config core.hooksPath .githooks
    node scripts/check-docs-sync.mjs --update docs/topic/X.md
    node scripts/check-docs-sync.mjs
    node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+   SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
    ```
 
 The sync check compares structure, code and links. It can't tell whether the translation says the same thing, so read both before you record the stamp. When you change a doc later, change both languages in the same commit.

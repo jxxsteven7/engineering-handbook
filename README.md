@@ -29,7 +29,7 @@ A good agent knows when to act, when to stop, and where to work. It learns all t
 |---|---|---|
 | `docs/` | People | The principles and the commands that matter most, in English and Chinese. Start here. |
 | `prompts/` | Agents | Detailed step-by-step instructions you give an agent so it sets something up or does a task by the same rules. In English only. |
-| `templates/` | Your repositories | Files to copy into your own repositories: hooks, checks, CI workflows, settings. |
+| `templates/` | Your machines and repositories | Files to install or copy: the workstation scripts, and hooks, checks and CI workflows for repositories. |
 | `scripts/`, `.githooks/`, `.github/` | This repository | Its own checks. |
 
 A doc tells a person what to do and why, briefly. A prompt has an agent do it, with every detail spelled out so the result is the same each time. `docs/` and `prompts/` use the same topic folders, every doc links to its prompts, and every prompt names the doc it follows. Read the doc before you give its prompt to an agent, so you know what the agent is about to do.
@@ -42,6 +42,14 @@ A doc tells a person what to do and why, briefly. A prompt has an agent do it, w
 | `agents/` | How do I plan work for agents, run them and let them work overnight? |
 
 ## Contents
+
+### Setup: the machine and the agents
+
+| Doc | Prompts for agents |
+|---|---|
+| [Set up a workstation](docs/setup/workstation.md): packages, git, SSH, logins, statusline, git prompt, permissions | [workstation.md](prompts/setup/workstation.md) |
+
+Files for your machine: [templates/workstation/](templates/workstation/).
 
 ### Repository: how a change reaches main
 
@@ -56,7 +64,7 @@ Files for your repository: [templates/repo/](templates/repo/).
 
 ### Coming next
 
-- `setup/`: the workstation, the terminal and the agent CLIs; instructions for agents (`AGENTS.md`, `CLAUDE.md`, memory).
+- `setup/`: instructions for agents (`AGENTS.md`, `CLAUDE.md`, memory).
 - `workspace/`: directory layout and names, worktrees, cleaning up after a task, git first aid.
 - `agents/`: planning, running an agent session, parallel development and overnight review.
 

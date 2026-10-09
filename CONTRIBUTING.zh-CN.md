@@ -25,7 +25,7 @@ git config core.hooksPath .githooks
 
 - `docs/` 给人看：原则和最重要的命令，中英双语。每篇都要短。
 - `prompts/` 给 agent 用，只有英文。prompt 要把每一步、确切的命令、在哪里停下来等人、怎么检查结果都写清楚。每个 prompt 开头写明它遵循哪篇文档，文档里也链接回它。
-- `templates/` 放给别人拷到自己仓库里的文件。里面每个脚本都有测试，CI 会跑。
+- `templates/` 放给别人装到自己电脑上、或者拷到自己仓库里的文件。里面每个脚本都有测试，CI 会跑。
 
 `docs/` 和 `prompts/` 共用 `setup/`、`workspace/`、`repository/`、`agents/` 这几个主题文件夹。新加的文档和 prompt 都要在 README 的目录表里链接。
 
@@ -45,6 +45,7 @@ git config core.hooksPath .githooks
    node scripts/check-docs-sync.mjs --update docs/topic/X.md
    node scripts/check-docs-sync.mjs
    node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+   SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
    ```
 
 同步检查比较的是结构、代码和链接，判断不了译文意思是否一致，所以记录同步戳之前，两个版本都要读一遍。以后改一篇文档时，两种语言在同一个 commit 里一起改。
@@ -54,4 +55,4 @@ git config core.hooksPath .githooks
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/repository/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 1ae911f7f014507fcc20ca06ecc66c10b3ab2ecc84069723a96d0e476b220c30 -->
+<!-- docs-sync: 4e7541e90420a04f81ab4b14df267acf0eab40556797c7d94e62425ffc3fff90 -->

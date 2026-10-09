@@ -29,7 +29,7 @@
 |---|---|---|
 | `docs/` | 人 | 原则和最重要的命令，中英双语。从这里开始读。 |
 | `prompts/` | agent | 交给 agent 的详细分步说明，让它按同一套规则配置环境或完成任务。只有英文。 |
-| `templates/` | 你的仓库 | 拷到你自己仓库里的文件：hook、检查脚本、CI workflow、设置。 |
+| `templates/` | 你的电脑和仓库 | 要安装或拷贝的文件：工作站脚本，以及给仓库用的 hook、检查脚本和 CI workflow。 |
 | `scripts/`、`.githooks/`、`.github/` | 本仓库 | 本仓库自己的检查。 |
 
 doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个细节都写清楚，保证每次结果一样。`docs/` 和 `prompts/` 按同样的主题分文件夹，每篇 doc 都链接到对应的 prompt，每个 prompt 都写明它遵循哪篇 doc。把 prompt 交给 agent 之前先读对应的 doc，这样你知道 agent 接下来要做什么。
@@ -42,6 +42,14 @@ doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个�
 | `agents/` | 怎么给 agent 规划工作、运行它们、让它们通宵干活？ |
 
 ## 目录
+
+### 配置：电脑和 agent
+
+| 文档 | 给 agent 的 prompt |
+|---|---|
+| [配置工作站](docs/setup/workstation.zh-CN.md)：系统包、git、SSH、登录、statusline、git 提示符、权限 | [workstation.md](prompts/setup/workstation.md) |
+
+给你电脑用的文件：[templates/workstation/](templates/workstation/)。
 
 ### 仓库：改动怎么进入 main
 
@@ -56,7 +64,7 @@ doc 简短地告诉人做什么、为什么。prompt 让 agent 去做，每个�
 
 ### 接下来要写
 
-- `setup/`：工作站、终端和 agent CLI 的配置；给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory）。
+- `setup/`：给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory）。
 - `workspace/`：目录布局和命名、worktree、任务完成后的清理、git 救急。
 - `agents/`：规划、运行一个 agent 会话、并行开发和夜间审查。
 
@@ -86,4 +94,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: 826d8aaca36b027d8b2852f1beef99f37a62f45c96205d5aa7533944669a34b6 -->
+<!-- docs-sync: 1c32644f82a050695b8490e16cc82318e21aa2d94668789ec87da46970e7b157 -->
