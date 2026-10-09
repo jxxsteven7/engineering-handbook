@@ -1,0 +1,22 @@
+# AGENTS.md
+
+Rules for AI agents, such as Codex and Claude Code, working on this repository. Codex reads this file automatically; Claude Code loads it through `CLAUDE.md`.
+
+This repository is a handbook. `docs/` is written for people, in English and Chinese, and stays short. `prompts/` is written for agents, in English, and spells out every step. `templates/` holds files to copy into other repositories. `scripts/`, `.githooks/` and `.github/` are this repository's own checks. `CONTRIBUTING.md` explains how each kind of file is written; read it before you change anything. Claude Code expands the reference below; other agents should open the file.
+
+@CONTRIBUTING.md
+
+## Always
+
+- **Commit to `main` directly.** This repository uses no branches, pull requests or versions. Commit only when the user asks, and push only when the user asks.
+- **Never add AI or agent attribution.** Commit messages contain no `Co-Authored-By` trailers for AI tools, no "Generated with" lines and no session links. The commit author is the user. Subjects read `<type>: <summary>`; the `commit-msg` hook checks this, and you never bypass it with `--no-verify`.
+- **Keep both languages in sync.** A change to `X.md` comes with the same change to `X.zh-CN.md` in the same commit, following `CONTRIBUTING.md`. Record the stamp with `node scripts/check-docs-sync.mjs --update <file>` only once the two files really say the same thing.
+- **Keep docs and prompts together.** When a doc's rules change, update the prompt that follows it, and the other way round.
+- **Run the checks** before you commit: `node scripts/check-docs-sync.mjs` and `node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs`.
+
+## Writing
+
+- Plain and short. Say what to do, then why. No marketing language, no filler.
+- Every command in a doc or prompt must have been run, or checked against the tool's documentation. Mark anything untested or on trial as such.
+- Keep personal details out: no home directory paths with real user names, private repository names, hostnames or email addresses. Use placeholders such as `<repo>` and `~/code/<repo>`.
+- Code blocks are identical in both languages, so comments inside them are in English.
