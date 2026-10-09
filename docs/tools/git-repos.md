@@ -14,6 +14,7 @@ For agents: [set-up-project.md](../../prompts/workspace/set-up-project.md) clone
 | Send PRs to someone else's project | Fork it; `origin` is your fork, `upstream` the original |
 | Start your own project from someone else's code | Clone it, rename their repository to the read-only `source`, and make your new repository `origin` |
 | Just try someone else's project | A plain clone at a release tag; no fork, no worktrees |
+| Open-source a project in stages | Publish snapshots of tags, or keep a public and a private repository; see [Open-sourcing in stages](../rules/staged-open-source.md) |
 
 Your own or your team's repository:
 

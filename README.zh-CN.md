@@ -65,6 +65,7 @@
 | [Commit 与 PR](docs/rules/commits-and-prs.zh-CN.md)：小改动、清楚的标题、stack | [open-pr.md](prompts/repository/open-pr.md) |
 | [Code review](docs/rules/code-review.zh-CN.md)：什么时候批准、看什么 | [review-pr.md](prompts/repository/review-pr.md) |
 | [并行开发和夜间自动审查](docs/rules/overnight.zh-CN.md)（试行）：脚本盯 PR，新会话审查，更强的模型修复，人来合并 | [overnight.md](prompts/agents/overnight.md) |
+| [分阶段开源](docs/rules/staged-open-source.zh-CN.md)：把 tag 做成快照发布，或者公开、私有两个仓库，内部历史都不公开 | |
 
 给你仓库用的文件：[templates/repo/](templates/repo/)。夜间流程用的文件：[templates/overnight/](templates/overnight/)。
 
@@ -75,7 +76,7 @@
 | [配置工作站](docs/tools/workstation.zh-CN.md)：系统包、git 配置、Claude Code 和 Codex、statusline、git 提示符、权限 | [workstation.md](prompts/setup/workstation.md) |
 | [SSH 和 GitHub](docs/tools/ssh-and-github.zh-CN.md)：SSH key、`~/.ssh/config`、`gh` 登录、服务器上的剪贴板 | 密钥和登录你自己做；服务器上的剪贴板：把 [workstation.md](prompts/setup/workstation.md) 和服务器别名交给 agent |
 | [Git 常用命令](docs/tools/git-commands.zh-CN.md)：看状态和历史、和远程同步、提交、分支、stash、标签 | |
-| [仓库和 worktree](docs/tools/git-repos.zh-CN.md)：开仓库的四种情况、开 worktree、任务做完后清理 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
+| [仓库和 worktree](docs/tools/git-repos.zh-CN.md)：开仓库的几种情况、开 worktree、任务做完后清理 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
 | [Git 救急](docs/tools/git-first-aid.zh-CN.md)：rebase 冲突和常见意外 | |
 
 给你电脑用的文件：[templates/workstation/](templates/workstation/)。
@@ -111,4 +112,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: d50d83327f3333cecf6bc0fbeab772582c8d8df53f03cdb896d691b676c09572 -->
+<!-- docs-sync: 9460e4965e6101e732f63d33d1fbc24686acec701a3de30c4c461584e1b5751e -->

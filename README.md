@@ -65,6 +65,7 @@ A doc tells a person what to do and why, briefly. A prompt has an agent do it, w
 | [Commits and pull requests](docs/rules/commits-and-prs.md): small changes, clear titles, stacks | [open-pr.md](prompts/repository/open-pr.md) |
 | [Code review](docs/rules/code-review.md): when to approve, what to check | [review-pr.md](prompts/repository/review-pr.md) |
 | [Parallel development and overnight review](docs/rules/overnight.md) (trial): a script watches the PRs, a new session reviews, a stronger model fixes, a person merges | [overnight.md](prompts/agents/overnight.md) |
+| [Open-sourcing in stages](docs/rules/staged-open-source.md): publish snapshots of tags, or keep a public and a private repository; internal history stays private | |
 
 Files for your repository: [templates/repo/](templates/repo/). Files for the overnight round: [templates/overnight/](templates/overnight/).
 
@@ -75,7 +76,7 @@ Files for your repository: [templates/repo/](templates/repo/). Files for the ove
 | [Set up a workstation](docs/tools/workstation.md): packages, git settings, Claude Code and Codex, statusline, git prompt, permissions | [workstation.md](prompts/setup/workstation.md) |
 | [SSH and GitHub](docs/tools/ssh-and-github.md): SSH key, `~/.ssh/config`, logging in to `gh`, the clipboard on servers | You do keys and logins yourself; for the clipboard on servers, give [workstation.md](prompts/setup/workstation.md) and the server's alias to an agent |
 | [Common Git commands](docs/tools/git-commands.md): status and history, syncing with the remote, commits, branches, stash, tags | |
-| [Repositories and worktrees](docs/tools/git-repos.md): four ways to open a repository, creating worktrees, cleaning up after a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
+| [Repositories and worktrees](docs/tools/git-repos.md): the ways to open a repository, creating worktrees, cleaning up after a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
 | [Git first aid](docs/tools/git-first-aid.md): rebase conflicts and common accidents | |
 
 Files for your machine: [templates/workstation/](templates/workstation/).

@@ -14,6 +14,7 @@
 | 给别人的开源项目提 PR | fork；`origin` 是你的 fork，`upstream` 是原仓库 |
 | 拿别人的代码当自己项目的起点 | clone 后把原仓库改名为只读的 `source`，`origin` 换成你自己新建的仓库 |
 | 只是试用别人的项目 | 普通 clone，切到一个 release tag；不用 fork，也不用 worktree |
+| 要分阶段开源的项目 | 把 tag 做成快照发布，或者公开、私有两个仓库，见[分阶段开源](../rules/staged-open-source.zh-CN.md) |
 
 自己或团队的仓库：
 
@@ -117,4 +118,4 @@ tmux kill-session -t cc-feat-new-task
 - [git-worktree](https://git-scm.com/docs/git-worktree)
 - GitHub Docs：[Contributing to a project](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)、[Syncing a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
 
-<!-- docs-sync: 20b6bfa6f3206300c4f1128448b2bf403480135f54e79cd36b94e07e6e6ba13a -->
+<!-- docs-sync: ee1272e3861ac6540a390646b3eb1515bef05f5ded057a0830c0bf58dad9400b -->
