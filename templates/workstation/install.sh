@@ -2,7 +2,7 @@
 # Sets up Claude Code and the terminal on this machine, as docs/tools/workstation.md in the
 # Agentic Engineering Handbook describes:
 #
-#   A. statusline         ~/.claude/statusline.sh: model | effort | context | weekly, and branch | worktree
+#   A. statusline         ~/.claude/statusline.sh: model | effort | context | 5h | weekly | rc, and branch | worktree
 #   B. git prompt         ~/.bash_git_prompt.sh, hooked into ~/.bashrc: (branch) [worktree] before the $
 #   C. permissions        bypass permissions by default in every new Claude Code session
 #   D. copy and paste     the fullscreen interface: select to copy, Ctrl+V pastes text and images

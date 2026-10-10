@@ -10,7 +10,7 @@ For agents: [workstation.md](../../prompts/setup/workstation.md) checks the mach
 
 | Part | What it does |
 |---|---|
-| Statusline | Under Claude Code's input box: model, effort, context used and the weekly limit; inside a repository also the branch and worktree |
+| Statusline | Under Claude Code's input box: model, effort, context used, the 5-hour limit with the time until it resets, the weekly limit, and a green `rc` while Remote Control is on; inside a repository also the branch and worktree |
 | Git prompt | In any bash terminal inside a repository: `(branch) [worktree]` before the `$`, with a `+` for a linked worktree |
 | Bypass permissions | Every new Claude Code session runs commands and edits files without asking |
 | Copy and paste | Selecting text copies it; Ctrl+V pastes text and screenshots |

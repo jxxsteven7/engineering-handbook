@@ -20,7 +20,7 @@ The result has six parts. Steps 1 to 6 set up A to E on the machine you run on. 
 
 | Part | Where | Effect |
 |---|---|---|
-| A. Statusline | `~/.claude/statusline.sh`, `statusLine` in `~/.claude/settings.json` | Under the input box: `model \| effort: <level> \| context: N% \| weekly: N%` in orange; inside a repository also `branch: <branch> \| worktree: <name>` in cyan and green |
+| A. Statusline | `~/.claude/statusline.sh`, `statusLine` in `~/.claude/settings.json` | Under the input box: `model \| effort: <level> \| context: N% \| 5h: N% (1h30m) \| weekly: N%` in orange, plus a green `rc` at the end while Remote Control is on; inside a repository also `branch: <branch> \| worktree: <name>` in cyan and green |
 | B. Git prompt | `~/.bash_git_prompt.sh`, a hook at the end of `~/.bashrc` | In any bash terminal inside a repository: yellow `(branch)` and pink `[worktree]` before the `$`; a linked worktree shows `[+name]` |
 | C. Bypass permissions | `permissions.defaultMode` and `skipDangerousModePermissionPrompt` in `~/.claude/settings.json` | Every new Claude Code session starts with `bypass permissions on` and no confirmation dialog |
 | D. Copy and paste | `tui` in `~/.claude/settings.json`, and `xclip` or `wl-clipboard` on a desktop | The fullscreen interface: selecting text copies it; Ctrl+V pastes text and images |

@@ -3,7 +3,7 @@
 # Install it as ~/.claude/statusline.sh; templates/workstation/install.sh does that.
 #
 # Up to 2 lines:
-#   1. model | effort | context % | weekly %   (Claude orange, whole line)
+#   1. model | effort | context % | 5h % | weekly % | rc   (Claude orange; "rc" green, only while Remote Control is on)
 #   2. branch | worktree                       (branch cyan, worktree green)
 # Segments are joined with " | "; a segment whose value is missing is dropped, and
 # line 2 is omitted entirely outside a git repository. The permission-mode / PR /
@@ -41,6 +41,8 @@ mapfile -t F < <(
     , (.context_window.used_percentage // "")
     , (.rate_limits.seven_day.used_percentage // "")
     , (.transcript_path // "")
+    , (.rate_limits.five_hour.used_percentage // "")
+    , (.rate_limits.five_hour.resets_at // "")
     ] | .[] | tostring' 2>/dev/null
 )
 model="${F[0]-}"
@@ -51,6 +53,8 @@ cur_dir="${F[4]-}"
 ctx_pct="${F[5]-}"
 wk_pct="${F[6]-}"
 transcript="${F[7]-}"
+fh_pct="${F[8]-}"
+fh_reset="${F[9]-}"
 
 # Round a percentage to a whole number; fail (non-zero) when absent/unparseable.
 fmt_pct() {
@@ -129,24 +133,53 @@ fi
 SEP=" | "
 
 # Line 1 (Claude orange, one colour for the whole line):
-#   <model> | effort: <level> | context: N% | weekly: N%
+#   <model> | effort: <level> | context: N% | 5h: N% (1h30m) | weekly: N% | rc
 #   model   = model.display_name, else model.id, else "Claude".
 #   effort  = effort.level, replaced by "ultracode" when the transcript says so.
 #   context = the current model's context window.
+#   5h      = rate_limits.five_hour, the 5-hour session limit, and the time until it resets.
 #   weekly  = rate_limits.seven_day, the account-wide 7-day limit.
+#   rc      = shown, in green, only while Remote Control is on.
 effort_label="$effort"
 (( ultra )) && effort_label="ultracode"
 
 parts=("${model:-Claude}")
 [[ -n "$effort_label" ]] && parts+=("effort: ${effort_label}")
 if v=$(fmt_pct "$ctx_pct"); then parts+=("context: ${v}%"); fi
+if v=$(fmt_pct "$fh_pct"); then                    # "5h: 41% (2h13m)": time left until the window resets
+  left=""
+  if [[ "$fh_reset" =~ ^[0-9]+$ ]]; then
+    printf -v now '%(%s)T' -1
+    m=$(( (fh_reset - now) / 60 ))
+    if (( m >= 60 )); then left=" ($((m / 60))h$((m % 60))m)"; elif (( m > 0 )); then left=" (${m}m)"; fi
+  fi
+  parts+=("5h: ${v}%${left}")
+fi
 if v=$(fmt_pct "$wk_pct");  then parts+=("weekly: ${v}%"); fi
+
+# ---------- Remote Control ----------
+# Claude Code records each session in ~/.claude/sessions/<pid>.json and fills in
+# bridgeSessionId there while Remote Control is on. This script runs as a child of
+# that claude process, so walk up the parents until a session file turns up.
+rc=0
+sess_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/sessions"
+p=$PPID
+for _ in 1 2 3 4 5 6 7 8; do
+  [[ "$p" =~ ^[0-9]+$ && "$p" -gt 1 ]] || break
+  if [[ -r "$sess_dir/$p.json" ]]; then
+    b=$(jq -r '.bridgeSessionId // empty' "$sess_dir/$p.json" 2>/dev/null); [[ -n "$b" ]] && rc=1
+    break
+  fi
+  st=$(</proc/$p/stat) 2>/dev/null || break
+  st=${st##*) }; set -- $st; p=${2-}                       # "state ppid ..." after the comm
+done
 
 line1="${ORANGE}"
 for i in "${!parts[@]}"; do
   (( i )) && line1+="$SEP"
   line1+="${parts[$i]}"
 done
+(( rc )) && line1+="${SEP}${GREEN}rc"                     # green "rc" while Remote Control is on
 line1+="${R}"
 printf '%s\n' "$line1"
 

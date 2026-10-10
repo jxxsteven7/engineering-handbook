@@ -10,7 +10,7 @@
 
 | 部分 | 效果 |
 |---|---|
-| Statusline | Claude Code 输入框下方：模型、effort、上下文占用和周额度；在仓库里还有分支和 worktree |
+| Statusline | Claude Code 输入框下方：模型、effort、上下文占用、5 小时额度和它多久重置、每周额度，开着 Remote Control 时还有一个绿色的 `rc`；在仓库里还有分支和 worktree |
 | Git 提示符 | 任何 bash 终端进了仓库，`$` 前面出现 `(branch) [worktree]`，linked worktree 带 `+` |
 | Bypass 权限 | 每个新的 Claude Code 会话执行命令、改文件都不再询问 |
 | 复制粘贴 | 选中文字即复制；Ctrl+V 粘贴文字和截图 |
@@ -75,4 +75,4 @@ bash ~/agentic-engineering-handbook/templates/workstation/install.sh
 - ssh 登录的机器上，安装脚本会让颜色和本地终端一致，重新登录一次即可。想在服务器上的 Claude Code 里也选中即复制、Ctrl+V 贴文字和截图，见 [SSH 和 GitHub](ssh-and-github.zh-CN.md) 的服务器一节。
 - 这些脚本是为 Ubuntu 和 bash 写的。macOS 和 zsh 的情况见 prompt 末尾的移植说明。
 
-<!-- docs-sync: c59da2dd79e54c686152c6e370fb4a064c3695400870febf9ccf525f435e55c9 -->
+<!-- docs-sync: 3d0d132f32f9d1a56bc262e45a8394e0bb7390c5ea35b39cd0c9ccd3d19848c1 -->
