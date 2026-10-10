@@ -31,6 +31,8 @@ git config core.hooksPath .githooks
 
 ## 写一篇文档
 
+文档的原则只有三个词：简单、简洁、可读。一篇几分钟读完，每句话都有用，没用过这些工具的人也能照着做。拿不准要不要写的，就不写。
+
 1. 用一种语言写或改文档，一般是中文（`X.zh-CN.md`）。要短、要直白：先说做什么，再说为什么，只放大家真正会敲的命令。放进去的每条命令都要亲自跑过。
 2. 在 Claude Code 里运行 `/sync-docs`。它只在你改过的地方更新另一种语言，用 humanizer skill 打磨新写的文字，记录同步戳，再跑检查。用 Codex 的话，让它按 `.claude/skills/sync-docs/SKILL.md` 去做。
 3. 看一遍结果，然后把两种语言一起提交。
@@ -58,4 +60,4 @@ bash templates/overnight/selftest.sh
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/rules/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 3ea03b881cce8a6005551150a78f3a832a4dcedef34bdc2bad9ec607a85f8b80 -->
+<!-- docs-sync: 1d1181b0ee071490832b105f252d4a5267e141e7be5a98fc4fd103fed9c81d73 -->

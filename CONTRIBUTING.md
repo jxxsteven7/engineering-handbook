@@ -31,6 +31,8 @@ git config core.hooksPath .githooks
 
 ## Writing a doc
 
+Docs follow three words: simple, concise, readable. A doc takes a few minutes to read, every sentence does a job, and someone who has never used the tools can follow it. If you are unsure whether something belongs, leave it out.
+
 1. Write or edit the doc in one language, usually Chinese (`X.zh-CN.md`). Keep it short and plain: what to do, then why, and only the commands people actually type. Run every command you include.
 2. In Claude Code, run `/sync-docs`. It updates the other language only where you changed something, polishes the new text with the humanizer skills, records the sync stamp and runs the checks. With Codex, ask it to follow `.claude/skills/sync-docs/SKILL.md`.
 3. Read the result, then commit both languages together.

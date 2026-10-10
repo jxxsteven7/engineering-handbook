@@ -16,7 +16,7 @@ This repository is a handbook. `docs/` is written for people, in Chinese and Eng
 
 ## Writing
 
-- Plain and short. Say what to do, then why. No marketing language, no filler.
+- Simple, concise, readable. Say what to do, then why. No marketing language, no filler.
 - Every command in a doc or prompt must have been run, or checked against the tool's documentation. Mark anything untested or on trial as such.
 - Keep personal details out: no home directory paths with real user names, private repository names, hostnames or email addresses. Use placeholders such as `<repo>` and `~/code/<repo>`.
 - Code blocks are identical in both languages, so comments inside them are in English.
