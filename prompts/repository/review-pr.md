@@ -1,6 +1,6 @@
 # Review a pull request
 
-Follows: `docs/rules/code-review.md` in the Agentic Engineering Handbook.
+Follows: `docs/rules/code-review.md` in the Engineering Handbook.
 
 Fill in before use: the pull request number `<N>`, and optionally the plan or prompt the pull request was built from and the file to write the report to. Without a report file, write `review-pr<N>.md` in the parent directory of the repository, so the report stays out of the repository.
 

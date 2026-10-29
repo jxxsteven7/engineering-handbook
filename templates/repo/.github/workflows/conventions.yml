@@ -1,5 +1,5 @@
 # Checks the commit and versioning convention (CONTRIBUTING.md) with scripts/check-commits.mjs,
-# from the Agentic Engineering Handbook (docs/rules/versioning.md there).
+# from the Engineering Handbook (docs/rules/versioning.md there).
 #
 # On a pull request: every commit in it, plus the PR title and body. The title becomes the squash
 # commit on main, so it must carry the next version. The job fills the version in when it is

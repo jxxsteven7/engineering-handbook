@@ -2,7 +2,7 @@
 
 Rules for AI agents, such as Codex and Claude Code, working on this repository. Codex reads this file automatically; Claude Code loads it through `CLAUDE.md`.
 
-This repository is a handbook. `docs/` is written for people, in Chinese and English, and stays short and plain: `docs/rules/` holds the rules, and `docs/tools/` how to use the tools. `prompts/` is written for agents, in English, and spells out every step. `templates/` holds files to copy into other repositories. `scripts/`, `.githooks/` and `.github/` are this repository's own checks. `CONTRIBUTING.md` explains how each kind of file is written; read it before you change anything. Claude Code expands the reference below; other agents should open the file.
+This repository is a handbook. `docs/` is written for people, in Chinese and English, and stays short and plain: `docs/rules/` holds the rules, `docs/agents/` the rules that only matter when agents do the work, and `docs/tools/` how to use the tools. `prompts/` is written for agents, in English, and spells out every step. `templates/` holds files to copy into other repositories. `scripts/`, `.githooks/` and `.github/` are this repository's own checks. `CONTRIBUTING.md` explains how each kind of file is written; read it before you change anything. Claude Code expands the reference below; other agents should open the file.
 
 @CONTRIBUTING.md
 

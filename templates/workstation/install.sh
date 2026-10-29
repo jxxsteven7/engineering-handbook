@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sets up Claude Code and the terminal on this machine, as docs/tools/workstation.md in the
-# Agentic Engineering Handbook describes:
+# Engineering Handbook describes:
 #
 #   A. statusline         ~/.claude/statusline.sh: model | effort | context | 5h | weekly | rc, and branch | worktree
 #   B. git prompt         ~/.bash_git_prompt.sh, hooked into ~/.bashrc: (branch) [worktree] before the $

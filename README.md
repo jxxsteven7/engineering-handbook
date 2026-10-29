@@ -46,6 +46,7 @@ Specifically, my rules and workflows cover:
 | Folder | For | What's in it |
 |---|---|---|
 | `docs/rules/` | People | The rules, that is, the method itself: what to do and why, with only the commands that best show each rule. In English and Chinese; read them once, in the order of the contents below. |
+| `docs/agents/` | People | Working with agents: the rules you need only when you use agents, such as parallel development and the overnight review. In English and Chinese; read them after the rules. |
 | `docs/tools/` | People | How to use the tools: setting up a workstation, SSH, git. In English and Chinese; look things up when you need them. |
 | `prompts/` | Agents | Detailed step-by-step instructions you give an agent so it sets something up or does a task by the same rules. In English only. |
 | `templates/` | Your machines and repositories | Real files to copy elsewhere and run: scripts, hooks, CI workflows, blank plans. You rarely copy them by hand; the prompts tell the agent which ones to take. |
@@ -64,10 +65,17 @@ A doc tells a person what to do and why, briefly. A prompt has an agent do it, w
 | [Versioning and releases](docs/rules/versioning.md): one version per merged pull request | [set-up-repo.md](prompts/repository/set-up-repo.md) |
 | [Commits and pull requests](docs/rules/commits-and-prs.md): small changes, clear titles, stacks | [open-pr.md](prompts/repository/open-pr.md) |
 | [Code review](docs/rules/code-review.md): when to approve, what to check | [review-pr.md](prompts/repository/review-pr.md) |
-| [Parallel development and overnight review](docs/rules/overnight.md) (trial): a script watches the PRs, a new session reviews, a stronger model fixes, a person merges | [overnight.md](prompts/agents/overnight.md) |
 | [Open-sourcing in stages](docs/rules/staged-open-source.md): publish snapshots of tags, or keep a public and a private repository; internal history stays private | |
 
-Files for your repository: [templates/repo/](templates/repo/). Files for the overnight round: [templates/overnight/](templates/overnight/).
+Files for your repository: [templates/repo/](templates/repo/).
+
+### Agents: read after the rules
+
+| Doc | Prompt for agents |
+|---|---|
+| [Parallel development and overnight review](docs/agents/overnight.md) (trial): a script watches the PRs, a new session reviews, a stronger model fixes, a person merges | [overnight.md](prompts/agents/overnight.md) |
+
+Files for the overnight round: [templates/overnight/](templates/overnight/).
 
 ### Tools: look up when needed
 
@@ -83,21 +91,21 @@ Files for your machine: [templates/workstation/](templates/workstation/).
 
 ### Coming next
 
-- Rules: planning with an agent; running a single development session; instructions for agents (how `AGENTS.md`, `CLAUDE.md` and memory divide the work).
+- Agents: planning with an agent; running a single development session; instructions for agents (how `AGENTS.md`, `CLAUDE.md` and memory divide the work).
 - Tools: SSH setup for servers, tmux, and managing Claude Code and Codex sessions.
 
 ## Quick start
 
-**For people.** Read the principles above, then the rules in order. Look up the tools when you need them.
+**For people.** Read the principles above, then the rules and the agent docs in order. Look up the tools when you need them.
 
 **For agents.** Clone this repository, then point your agent at a prompt:
 
 ```bash
-git clone https://github.com/jxxsteven7/agentic-engineering-handbook.git ~/agentic-engineering-handbook
+git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook
 ```
 
 ```text
-Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow it for this repository.
+Read ~/engineering-handbook/prompts/repository/set-up-repo.md and follow it for this repository.
 ```
 
 In Claude Code you can also type `@` followed by the file's path. Each prompt says where it stops to wait for you.

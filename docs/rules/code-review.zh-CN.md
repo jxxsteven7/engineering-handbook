@@ -14,7 +14,7 @@
 - 可改可不改的评论以 `nit:` 开头。评论针对代码，不针对人，并说明理由。
 - 一个工作日内给出回应。
 - agent 写的每一行都由作者负责，作者在请人 review 之前要自己读过、跑过。
-- 先让一个没写过这段代码的新会话审一遍，很有用。只有计划里标明的任务，它才能代替人的审查，见[夜间自动审查](overnight.zh-CN.md)。agent 从不批准、从不合并。
+- 先让一个没写过这段代码的新会话审一遍，很有用。只有计划里标明的任务，它才能代替人的审查，见[夜间自动审查](../agents/overnight.zh-CN.md)。agent 从不批准、从不合并。
 
 ## 关键命令
 
@@ -60,4 +60,4 @@ gh pr review 123 --approve                                  # or --request-chang
 
 Google 的指南采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 协议。
 
-<!-- docs-sync: 1debeaa2f967f3260b00b17c942bd3d3465c5e6fdc37300750ed08a20e1343ab -->
+<!-- docs-sync: 948bf6ca972d4bf83b3baf8b950d1081bc7c6ccd3321b7054e04cf474e6d043b -->

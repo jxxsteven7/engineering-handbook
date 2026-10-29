@@ -1,6 +1,6 @@
 # Set up a project directory
 
-Follows: `docs/tools/git-repos.md` in the Agentic Engineering Handbook.
+Follows: `docs/tools/git-repos.md` in the Engineering Handbook.
 
 Fill in before use: the repository (an `owner/name` or URL), and which situation applies. If the user didn't say, ask.
 

@@ -15,18 +15,18 @@ How this repository is written and maintained. The rules apply to everyone, incl
 You need git and Node.js 22 or later.
 
 ```bash
-git clone git@github.com:jxxsteven7/agentic-engineering-handbook.git
-cd agentic-engineering-handbook
+git clone git@github.com:jxxsteven7/engineering-handbook.git
+cd engineering-handbook
 git config core.hooksPath .githooks
 ```
 
 ## The three kinds of files
 
-- `docs/` is for people, in English and Chinese, in two folders. `docs/rules/` holds the method itself: what to do and why, with only the one or two commands that best show each rule. `docs/tools/` holds how to use the tools, such as git and SSH, to look up when you need them. Keep each doc short.
+- `docs/` is for people, in English and Chinese, in three folders. `docs/rules/` holds the method itself: what to do and why, with only the one or two commands that best show each rule. `docs/agents/` holds the rules you need only when you work with agents, such as the overnight review. `docs/tools/` holds how to use the tools, such as git and SSH, to look up when you need them. Keep each doc short.
 - `prompts/` is for agents, in English only. A prompt spells out every step, the exact commands, where to stop and wait for a person, and how to check the result. Each prompt starts with the doc it follows, and the doc links back to it.
 - `templates/` holds files that people install on their machines or copy into their repositories. Every script there has tests, and CI runs them.
 
-`prompts/` is grouped by topic: `setup/`, `workspace/`, `repository/` and `agents/`. A new rule goes in `docs/rules/`. A new set of commands for a tool goes in `docs/tools/`, and the rule that needs it links there. Link every new doc and prompt from the contents table in the README.
+`prompts/` is grouped by topic: `setup/`, `workspace/`, `repository/` and `agents/`. A new rule goes in `docs/rules/`, or in `docs/agents/` if it only matters when agents do the work. A new set of commands for a tool goes in `docs/tools/`, and the rule that needs it links there. Link every new doc and prompt from the contents table in the README.
 
 ## Writing a doc
 

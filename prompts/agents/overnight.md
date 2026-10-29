@@ -1,6 +1,6 @@
 # Set up parallel development and the overnight review
 
-Follows: `docs/rules/overnight.md` in the Agentic Engineering Handbook (a trial).
+Follows: `docs/agents/overnight.md` in the Engineering Handbook (a trial).
 
 You are setting up an overnight round for one repository: a development session per PR, and a watcher that reviews and fixes each PR once it is up, and leaves the merge to a person. The handbook is the repository that contains this file; its root is two directories above this file, and the files to copy are in `templates/overnight/` there. Read `watch.sh`, `run-review.sh`, `review-prompt.md` and `fix-prompt.md` there before you start.
 

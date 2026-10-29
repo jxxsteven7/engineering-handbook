@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The server side of the clipboard over ssh, from the Agentic Engineering Handbook (part F of
+# The server side of the clipboard over ssh, from the Engineering Handbook (part F of
 # prompts/setup/workstation.md): installs xclip and appends a claude() function to ~/.bashrc.
 # Run it as a normal user, from the workstation:  ssh <alias> 'bash -s' < server-clipboard.sh
 # It never needs root and can run again safely. Every command that might read stdin gets

@@ -46,6 +46,7 @@
 | 文件夹 | 给谁 | 里面是什么 |
 |---|---|---|
 | `docs/rules/` | 人 | 规则，也就是这套方法本身：做什么、为什么，只留最能说明规则的命令。中英双语，按下面目录的顺序读一遍。 |
+| `docs/agents/` | 人 | 和 agent 一起工作：只有用 agent 时才需要的规则，比如并行开发和夜间审查。中英双语，读完规则篇再读。 |
 | `docs/tools/` | 人 | 工具用法：工作站、SSH、git 这些具体怎么配、怎么用。中英双语，用到时查。 |
 | `prompts/` | agent | 交给 agent 的详细分步说明，让它按同一套规则配置环境或完成任务。只有英文。 |
 | `templates/` | 你的电脑和仓库 | 要拷到别处才能运行的真实文件：脚本、hook、CI workflow、空白的计划模板。一般不用你手动拷，prompt 会告诉 agent 拿哪些。 |
@@ -64,10 +65,17 @@
 | [版本与发布](docs/rules/versioning.zh-CN.md)：每个合并的 PR 一个版本号 | [set-up-repo.md](prompts/repository/set-up-repo.md) |
 | [Commit 与 PR](docs/rules/commits-and-prs.zh-CN.md)：小改动、清楚的标题、stack | [open-pr.md](prompts/repository/open-pr.md) |
 | [Code review](docs/rules/code-review.zh-CN.md)：什么时候批准、看什么 | [review-pr.md](prompts/repository/review-pr.md) |
-| [并行开发和夜间自动审查](docs/rules/overnight.zh-CN.md)（试行）：脚本盯 PR，新会话审查，更强的模型修复，人来合并 | [overnight.md](prompts/agents/overnight.md) |
 | [分阶段开源](docs/rules/staged-open-source.zh-CN.md)：把 tag 做成快照发布，或者公开、私有两个仓库，内部历史都不公开 | |
 
-给你仓库用的文件：[templates/repo/](templates/repo/)。夜间流程用的文件：[templates/overnight/](templates/overnight/)。
+给你仓库用的文件：[templates/repo/](templates/repo/)。
+
+### Agent：读完规则再读
+
+| 文档 | 给 agent 的 prompt |
+|---|---|
+| [并行开发和夜间自动审查](docs/agents/overnight.zh-CN.md)（试行）：脚本盯 PR，新会话审查，更强的模型修复，人来合并 | [overnight.md](prompts/agents/overnight.md) |
+
+夜间流程用的文件：[templates/overnight/](templates/overnight/)。
 
 ### 工具：用到时查
 
@@ -83,21 +91,21 @@
 
 ### 接下来要写
 
-- 规则：和 agent 一起做规划；运行单个开发会话；给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory 怎么分工）。
+- Agent：和 agent 一起做规划；运行单个开发会话；给 agent 的指令（`AGENTS.md`、`CLAUDE.md`、memory 怎么分工）。
 - 工具：服务器的 SSH 配置、tmux、Claude Code 和 Codex 的会话管理。
 
 ## 快速上手
 
-**给人看。** 先读上面的原则，再按顺序读规则篇。工具篇用到时再查。
+**给人看。** 先读上面的原则，再按顺序读规则篇和 agent 篇。工具篇用到时再查。
 
 **给 agent 用。** 把这个仓库 clone 下来，然后让 agent 读对应的 prompt：
 
 ```bash
-git clone https://github.com/jxxsteven7/agentic-engineering-handbook.git ~/agentic-engineering-handbook
+git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook
 ```
 
 ```text
-Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow it for this repository.
+Read ~/engineering-handbook/prompts/repository/set-up-repo.md and follow it for this repository.
 ```
 
 在 Claude Code 里也可以输入 `@` 再接文件路径。每个 prompt 都写明了它会在哪里停下来等你。
@@ -112,4 +120,4 @@ Read ~/agentic-engineering-handbook/prompts/repository/set-up-repo.md and follow
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: 9460e4965e6101e732f63d33d1fbc24686acec701a3de30c4c461584e1b5751e -->
+<!-- docs-sync: fed64bce81ba4d115a51ebf44bb3841936a57f5de3ce17daffe9951da3165711 -->

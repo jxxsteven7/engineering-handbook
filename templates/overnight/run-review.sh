@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Reviews one PR, then fixes what the review found, from the Agentic Engineering Handbook
-# (docs/rules/overnight.md). watch.sh starts it in a tmux session named review-pr<N>, inside
+# Reviews one PR, then fixes what the review found, from the Engineering Handbook
+# (docs/agents/overnight.md). watch.sh starts it in a tmux session named review-pr<N>, inside
 # the PR's own worktree:
 #
 #   run-review.sh <PR number> <worktree> <review effort> <development prompt file>

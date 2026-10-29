@@ -64,7 +64,7 @@ tmux kill-session -t review-pr<N> && rm -f ~/code/<repo>/plans/autoreview/state/
 - Merge in dependency order. After each merge, rebase the remaining PRs that conflict.
 - PRs the plan marks for a person: the VERDICT is only a hint. Read the diff, look at the screenshots, run it yourself, then approve.
 - PRs the plan marks for an agent: read the summary and CI, and merge if they're fine. A person always clicks merge.
-- After merging, clean up as in [Workspace](workspace.md). The PR's files in `plans/` can stay as a record.
+- After merging, clean up as in [Workspace](../rules/workspace.md). The PR's files in `plans/` can stay as a record.
 
 ## Risks
 

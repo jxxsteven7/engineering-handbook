@@ -1,12 +1,12 @@
 # Set up a workstation for coding agents
 
-Follows: `docs/tools/workstation.md` and `docs/tools/ssh-and-github.md` in the Agentic Engineering Handbook.
+Follows: `docs/tools/workstation.md` and `docs/tools/ssh-and-github.md` in the Engineering Handbook.
 
 You are setting up the user's machines so that every Claude Code session starts with the same tools, view and rules. The user may give you nothing but this file and a few words, such as the name of a server. That is enough: work out what to do from the table below and from the machine itself, and ask only for what you can't find out.
 
 ## Start here
 
-Find the handbook. It is the repository that contains this file; its root is two directories above this file. If you were given only the text of this file, use `~/agentic-engineering-handbook`, and if it isn't there, clone it with `git clone https://github.com/jxxsteven7/agentic-engineering-handbook.git ~/agentic-engineering-handbook`. The scripts are in `templates/workstation/` there. Below, `<handbook>` stands for its root.
+Find the handbook. It is the repository that contains this file; its root is two directories above this file. If you were given only the text of this file, use `~/engineering-handbook`, and if it isn't there, clone it with `git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook`. The scripts are in `templates/workstation/` there. Below, `<handbook>` stands for its root.
 
 Then take the row that fits, without asking the user to choose:
 

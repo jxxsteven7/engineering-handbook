@@ -15,18 +15,18 @@
 需要 git 和 Node.js 22 或更新版本。
 
 ```bash
-git clone git@github.com:jxxsteven7/agentic-engineering-handbook.git
-cd agentic-engineering-handbook
+git clone git@github.com:jxxsteven7/engineering-handbook.git
+cd engineering-handbook
 git config core.hooksPath .githooks
 ```
 
 ## 三类文件
 
-- `docs/` 给人看，中英双语，分两个文件夹。`docs/rules/` 是规则，也就是这套方法本身：做什么、为什么，每条规则只留一两条最能说明它的命令。`docs/tools/` 是工具用法，比如 git、SSH 具体怎么用，用到时再查。每篇都要短。
+- `docs/` 给人看，中英双语，分三个文件夹。`docs/rules/` 是规则，也就是这套方法本身：做什么、为什么，每条规则只留一两条最能说明它的命令。`docs/agents/` 是只有和 agent 一起工作时才需要的规则，比如夜间审查。`docs/tools/` 是工具用法，比如 git、SSH 具体怎么用，用到时再查。每篇都要短。
 - `prompts/` 给 agent 用，只有英文。prompt 要把每一步、确切的命令、在哪里停下来等人、怎么检查结果都写清楚。每个 prompt 开头写明它遵循哪篇文档，文档里也链接回它。
 - `templates/` 放给别人装到自己电脑上、或者拷到自己仓库里的文件。里面每个脚本都有测试，CI 会跑。
 
-`prompts/` 按主题分文件夹：`setup/`、`workspace/`、`repository/`、`agents/`。新的规则放进 `docs/rules/`。某个工具的一组新命令放进 `docs/tools/`，用到它的规则篇再链接过去。新加的文档和 prompt 都要在 README 的目录表里链接。
+`prompts/` 按主题分文件夹：`setup/`、`workspace/`、`repository/`、`agents/`。新的规则放进 `docs/rules/`；只有让 agent 干活时才用得上的，放进 `docs/agents/`。某个工具的一组新命令放进 `docs/tools/`，用到它的规则篇再链接过去。新加的文档和 prompt 都要在 README 的目录表里链接。
 
 ## 写一篇文档
 
@@ -59,4 +59,4 @@ bash templates/overnight/selftest.sh
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/rules/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 56a9af85ea6413e97ee48b75baca1e74d6d26cc8208cd01af96c6fa60044b956 -->
+<!-- docs-sync: 516e1a0cb5f53f3ac93ebab95b11438869b493fcc826b4c4a747e2175764f516 -->

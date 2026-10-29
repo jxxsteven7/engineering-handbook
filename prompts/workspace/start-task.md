@@ -1,6 +1,6 @@
 # Start a task in its own worktree
 
-Follows: `docs/rules/workspace.md` and `docs/tools/git-repos.md` in the Agentic Engineering Handbook.
+Follows: `docs/rules/workspace.md` and `docs/tools/git-repos.md` in the Engineering Handbook.
 
 Fill in before use: the task in one sentence, and, if known, the branch name and the base (default `origin/main`). For a branch that already exists on the remote, give its name.
 

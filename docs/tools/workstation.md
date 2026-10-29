@@ -63,8 +63,8 @@ For Codex, run `npm install -g @openai/codex`, then `codex` and sign in.
 ### 5. Install the rest
 
 ```bash
-git clone https://github.com/jxxsteven7/agentic-engineering-handbook.git ~/agentic-engineering-handbook
-bash ~/agentic-engineering-handbook/templates/workstation/install.sh
+git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook
+bash ~/engineering-handbook/templates/workstation/install.sh
 ```
 
 The installer never uses sudo and can run again safely. It ends with a test whose last line must read `0 FAIL`. Then restart `claude` and open a new terminal.

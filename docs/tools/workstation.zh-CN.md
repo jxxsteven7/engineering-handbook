@@ -63,8 +63,8 @@ claude                                           # log in, then /exit
 ### 5. 安装其余部分
 
 ```bash
-git clone https://github.com/jxxsteven7/agentic-engineering-handbook.git ~/agentic-engineering-handbook
-bash ~/agentic-engineering-handbook/templates/workstation/install.sh
+git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook
+bash ~/engineering-handbook/templates/workstation/install.sh
 ```
 
 安装脚本从不用 sudo，可以反复运行。它最后会跑一遍测试，最后一行必须是 `0 FAIL`。然后重启 `claude`，再开一个新终端。
@@ -75,4 +75,4 @@ bash ~/agentic-engineering-handbook/templates/workstation/install.sh
 - ssh 登录的机器上，安装脚本会让颜色和本地终端一致，重新登录一次即可。想在服务器上的 Claude Code 里也选中即复制、Ctrl+V 贴文字和截图，见 [SSH 和 GitHub](ssh-and-github.zh-CN.md) 的服务器一节。
 - 这些脚本是为 Ubuntu 和 bash 写的。macOS 和 zsh 的情况见 prompt 末尾的移植说明。
 
-<!-- docs-sync: 3d0d132f32f9d1a56bc262e45a8394e0bb7390c5ea35b39cd0c9ccd3d19848c1 -->
+<!-- docs-sync: ca338a22c47b4fa4eb88c3cc604e511cea70219ec1784c6a7cf95a1234e0dcca -->

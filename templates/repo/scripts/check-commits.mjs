@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// The commit and versioning convention as code, from the Agentic Engineering Handbook
+// The commit and versioning convention as code, from the Engineering Handbook
 // (docs/rules/commits-and-prs.md and docs/rules/versioning.md there). The repository's
 // own docs state the rules in prose (RULES below) and this script enforces them. When the two
 // disagree, change one of them so that they match again. Adjust TYPES and RULES when you copy it.

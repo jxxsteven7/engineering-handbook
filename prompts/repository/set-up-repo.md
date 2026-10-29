@@ -1,6 +1,6 @@
 # Set up a repository: protected main, checked commits, versions
 
-Follows: `docs/rules/protect-main.md` and `docs/rules/versioning.md` in the Agentic Engineering Handbook.
+Follows: `docs/rules/protect-main.md` and `docs/rules/versioning.md` in the Engineering Handbook.
 
 You are setting up the git repository in the current working directory so that:
 
