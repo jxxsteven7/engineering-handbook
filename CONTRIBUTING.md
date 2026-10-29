@@ -9,7 +9,6 @@ How this repository is written and maintained. The rules apply to everyone, incl
 - This is a docs repository with one maintainer, so the maintainer commits to `main` directly. There are no branches, pull requests or versions; the [full process](docs/rules/protect-main.md) is meant for code that others depend on.
 - Outside contributors fork the repository and open a pull request.
 - Two checks still apply. The `commit-msg` hook checks every commit message: `<type>: <summary>`, English, and no AI or agent attribution. On every push, CI checks that each doc matches its translation, that the scripts pass their tests, and that no commit carries attribution. The `pre-commit` hook only reminds you when docs need syncing.
-- Milestones, such as the first public release, get a tag by hand.
 
 ## Setup
 

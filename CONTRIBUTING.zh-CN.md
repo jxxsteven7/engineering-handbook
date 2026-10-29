@@ -9,7 +9,6 @@
 - 这是一个文档仓库，只有一个维护者，所以维护者直接往 `main` 提交。不开分支、不走 PR、没有版本号；[完整流程](docs/rules/protect-main.zh-CN.md)是给有人依赖的代码准备的。
 - 外部贡献者 fork 仓库后提 PR。
 - 有两道检查仍然保留。`commit-msg` hook 检查每条 commit 信息：`<type>: <summary>`、英文、没有 AI 或 agent 署名。每次 push，CI 检查每篇文档和译文是否一致、脚本测试是否通过、commit 里有没有署名。`pre-commit` hook 只在文档需要同步时提醒一下。
-- 里程碑（比如第一次公开）手动打 tag。
 
 ## 准备
 
@@ -60,4 +59,4 @@ bash templates/overnight/selftest.sh
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/rules/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 1d1181b0ee071490832b105f252d4a5267e141e7be5a98fc4fd103fed9c81d73 -->
+<!-- docs-sync: 56a9af85ea6413e97ee48b75baca1e74d6d26cc8208cd01af96c6fa60044b956 -->
