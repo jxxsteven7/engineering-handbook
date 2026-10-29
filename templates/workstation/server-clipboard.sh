@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The server side of the clipboard over ssh, from the Engineering Handbook (part F of
+# The server side of the clipboard over ssh, from the Engineering Handbook (part D of
 # prompts/setup/workstation.md): installs xclip and appends a claude() function to ~/.bashrc.
 # Run it as a normal user, from the workstation:  ssh <alias> 'bash -s' < server-clipboard.sh
 # It never needs root and can run again safely. Every command that might read stdin gets
@@ -66,7 +66,7 @@ B=$(readlink -f "$(command -v claude 2>/dev/null || echo ~/.local/bin/claude)" 2
 if [ -f "$B" ]; then
   if LC_ALL=C grep -aqE '\?\.ssh\?\?!![A-Za-z_$]+\.SSH_CONNECTION' "$B"; then
     echo "OK   $("$B" --version </dev/null 2>/dev/null | head -1) still decides ssh from SSH_CONNECTION alone"
-  else echo "WARN this version of Claude Code decides ssh differently (see Troubleshooting in part F of the prompt); the claude() function may no longer work"; ok=0; fi
+  else echo "WARN this version of Claude Code decides ssh differently (see Troubleshooting in part D of the prompt); the claude() function may no longer work"; ok=0; fi
 else echo "SKIP Claude Code is not installed on the server yet; run this script again after installing it"; fi
 
 [ "$ok" = 1 ] && echo "== SERVER OK" || echo "== SERVER has problems; see the WARN and FAIL lines above"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Acceptance test of the clipboard over ssh, from the Engineering Handbook (part H of
+# Acceptance test of the clipboard over ssh, from the Engineering Handbook (part D of
 # prompts/setup/workstation.md). Run it on the workstation:  bash accept-clipboard.sh <ssh alias>
 # It overwrites the workstation clipboard for a moment and then puts back what was there, an
 # image included. The last line reads "== N PASS, M FAIL ==", and M must be 0.

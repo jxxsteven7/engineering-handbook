@@ -2,7 +2,7 @@
 
 **English** | [简体中文](workstation.zh-CN.md)
 
-Set up each machine once, so that every agent session starts with the same tools, the same view and the same rules. You do the steps that involve keys and accounts; an agent can do the rest.
+Set up each machine once, so that every agent session starts with the same tools, the same view and the same rules. You do the steps that involve keys and accounts; an agent can do the rest. The settings of Claude Code itself are on a page of their own, [Set up Claude Code](claude-code.md); the installer here does them too.
 
 For agents: [workstation.md](../../prompts/setup/workstation.md) checks the machine, asks you for what only you can do, then installs and tests the rest.
 
@@ -10,17 +10,14 @@ For agents: [workstation.md](../../prompts/setup/workstation.md) checks the mach
 
 | Part | What it does |
 |---|---|
-| Statusline | Under Claude Code's input box: model, effort, context used, the 5-hour limit with the time until it resets, the weekly limit, and a green `rc` while Remote Control is on; inside a repository also the branch and worktree |
 | Git prompt | In any bash terminal inside a repository: `(branch) [worktree]` before the `$`, with a `+` for a linked worktree |
-| Bypass permissions | Every new Claude Code session runs commands and edits files without asking |
-| Copy and paste | Selecting text copies it; Ctrl+V pastes text and screenshots |
-| No attribution | Claude Code adds no co-author line, PR footer or session link |
+| Colours over ssh | On a machine you reach over ssh, Claude Code's colours are as deep as in your local terminal |
+| Claude Code | The statusline, bypass by default, copy and paste, no attribution, Remote Control at startup and the earlier auto-compact; see [Set up Claude Code](claude-code.md) |
 
 ## Rules
 
 - Keys, tokens and logins are yours. An agent never creates an SSH key, reads a token or logs in for you.
 - An agent never runs sudo. It gives you the command, and you run it in Claude Code with a `!` prefix, so the output comes back into the conversation.
-- Bypass mode means no one confirms each command. Pair it with the rest of this handbook: each agent works in its own worktree, the hard rules are in `AGENTS.md`, and `main` is protected. Never run `claude` as root.
 
 ## Steps
 
@@ -67,10 +64,9 @@ git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-h
 bash ~/engineering-handbook/templates/workstation/install.sh
 ```
 
-The installer never uses sudo and can run again safely. It ends with a test whose last line must read `0 FAIL`. Then restart `claude` and open a new terminal.
+It sets up the terminal, then runs the Claude Code installer. Neither uses sudo, and both can run again safely. Each ends with a test whose last line must read `0 FAIL`. Then restart `claude` and open a new terminal.
 
 ## Good to know
 
-- To paste a screenshot on GNOME, press PrtSc, select an area, press Enter, then Ctrl+V in Claude Code. `[Image #1]` appears in the input box.
-- Over ssh, the installer makes the colors match your local terminal; log in again once. To copy on select, and paste text and screenshots with Ctrl+V, in Claude Code on a server too, see the section on servers in [SSH and GitHub](ssh-and-github.md).
+- Over ssh, the colours take effect once you log in again. To copy on select, and paste text and screenshots with Ctrl+V, in Claude Code on a server too, see the section on servers in [SSH and GitHub](ssh-and-github.md).
 - The scripts are written for Ubuntu and bash. For macOS and zsh, see the porting notes at the end of the prompt.

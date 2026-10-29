@@ -45,7 +45,9 @@ jobs:
       - uses: actions/checkout@v5
       - name: Syntax
         run: for f in templates/*/*.sh .githooks/*; do bash -n "$f"; done
-      - name: Acceptance test of the statusline and the git prompt
+      - name: Acceptance test of the statusline
+        run: SCRIPTS_ONLY=1 bash templates/claude-code/accept.sh
+      - name: Acceptance test of the git prompt
         run: SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
       - name: Self-test of the server clipboard script
         run: bash templates/workstation/selftest-clipboard.sh

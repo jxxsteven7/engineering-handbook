@@ -47,7 +47,7 @@
 |---|---|---|
 | `docs/rules/` | 人 | 规则，也就是这套方法本身：做什么、为什么，只留最能说明规则的命令。中英双语，按下面目录的顺序读一遍。 |
 | `docs/agents/` | 人 | 和 agent 一起工作：只有用 agent 时才需要的规则，比如并行开发和夜间审查。中英双语，读完规则篇再读。 |
-| `docs/tools/` | 人 | 工具用法：工作站、SSH、git 这些具体怎么配、怎么用。中英双语，用到时查。 |
+| `docs/tools/` | 人 | 工具用法：工作站、Claude Code、SSH、git 这些具体怎么配、怎么用。中英双语，用到时查。 |
 | `prompts/` | agent | 交给 agent 的详细分步说明，让它按同一套规则配置环境或完成任务。只有英文。 |
 | `templates/` | 你的电脑和仓库 | 要拷到别处才能运行的真实文件：脚本、hook、CI workflow、空白的计划模板。一般不用你手动拷，prompt 会告诉 agent 拿哪些。 |
 | `scripts/`、`.githooks/`、`.github/` | 本仓库 | 本仓库自己的检查。 |
@@ -81,13 +81,14 @@
 
 | 文档 | 给 agent 的 prompt |
 |---|---|
-| [配置工作站](docs/tools/workstation.zh-CN.md)：系统包、git 配置、Claude Code 和 Codex、statusline、git 提示符、权限 | [workstation.md](prompts/setup/workstation.md) |
+| [配置工作站](docs/tools/workstation.zh-CN.md)：系统包、git 配置、Claude Code 和 Codex、git 提示符，以及下一行的全部内容 | [workstation.md](prompts/setup/workstation.md) |
+| [配置 Claude Code](docs/tools/claude-code.zh-CN.md)：statusline、bypass 权限、复制粘贴、不署名、Remote Control、提前自动压缩 | [claude-code.md](prompts/setup/claude-code.md) |
 | [SSH 和 GitHub](docs/tools/ssh-and-github.zh-CN.md)：SSH key、`~/.ssh/config`、`gh` 登录、服务器上的剪贴板 | 密钥和登录你自己做；服务器上的剪贴板：把 [workstation.md](prompts/setup/workstation.md) 和服务器别名交给 agent |
 | [Git 常用命令](docs/tools/git-commands.zh-CN.md)：看状态和历史、和远程同步、提交、分支、stash、标签 | |
 | [仓库和 worktree](docs/tools/git-repos.zh-CN.md)：开仓库的几种情况、开 worktree、任务做完后清理 | [set-up-project.md](prompts/workspace/set-up-project.md)、[start-task.md](prompts/workspace/start-task.md)、[finish-task.md](prompts/workspace/finish-task.md) |
 | [Git 救急](docs/tools/git-first-aid.zh-CN.md)：rebase 冲突和常见意外 | |
 
-给你电脑用的文件：[templates/workstation/](templates/workstation/)。
+给你电脑用的文件：[templates/workstation/](templates/workstation/)、[templates/claude-code/](templates/claude-code/)。
 
 ### 接下来要写
 
@@ -120,4 +121,4 @@ Read ~/engineering-handbook/prompts/repository/set-up-repo.md and follow it for 
 - commit、PR 和 code review 几篇改编自 Google 的 [Engineering Practices](https://google.github.io/eng-practices/)，协议为 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)。
 - 本仓库公开前会补上协议文件。
 
-<!-- docs-sync: fed64bce81ba4d115a51ebf44bb3841936a57f5de3ce17daffe9951da3165711 -->
+<!-- docs-sync: ef93bdc1575c254b25e039fb792816fc687f01111dd55081fe7f73c1e28bc6e8 -->

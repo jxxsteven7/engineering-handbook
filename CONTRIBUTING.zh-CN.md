@@ -49,6 +49,7 @@ git config core.hooksPath .githooks
 node scripts/check-docs-sync.mjs --status
 node scripts/check-docs-sync.mjs
 node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+SCRIPTS_ONLY=1 bash templates/claude-code/accept.sh
 SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
 bash templates/workstation/selftest-clipboard.sh
 bash templates/overnight/selftest.sh
@@ -59,4 +60,4 @@ bash templates/overnight/selftest.sh
 - Codex 读 [AGENTS.md](AGENTS.md)。Claude Code 读 [CLAUDE.md](CLAUDE.md)，它引入了 `AGENTS.md`，所以两者遵守同一套规则。
 - 想把某个文件带进对话，用 `@` 引用它，例如 `@docs/rules/code-review.md check that this doc matches its prompt`。
 
-<!-- docs-sync: 516e1a0cb5f53f3ac93ebab95b11438869b493fcc826b4c4a747e2175764f516 -->
+<!-- docs-sync: e69c0c701970a971583f1fc43724d17e0eeeceeb01593792ae9fb473a9110f7e -->

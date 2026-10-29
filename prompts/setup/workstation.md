@@ -6,42 +6,39 @@ You are setting up the user's machines so that every Claude Code session starts 
 
 ## Start here
 
-Find the handbook. It is the repository that contains this file; its root is two directories above this file. If you were given only the text of this file, use `~/engineering-handbook`, and if it isn't there, clone it with `git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook`. The scripts are in `templates/workstation/` there. Below, `<handbook>` stands for its root.
+Find the handbook. It is the repository that contains this file; its root is two directories above this file. If you were given only the text of this file, use `~/engineering-handbook`, and if it isn't there, clone it with `git clone https://github.com/jxxsteven7/engineering-handbook.git ~/engineering-handbook`. The scripts are in `templates/workstation/` and `templates/claude-code/` there. Below, `<handbook>` stands for its root.
 
 Then take the row that fits, without asking the user to choose:
 
 | Situation | What to do |
 |---|---|
-| The user named a server: an alias from `~/.ssh/config`, a host name, or `user@host` | Part F for that server, from this machine; skip steps 1 to 6. If this machine is itself reached over ssh (`SSH_CONNECTION` is set), do nothing: tell the user to give this file and the server's name to Claude Code on the computer they sit at |
-| No server named, on a desktop (`XDG_SESSION_TYPE` is `x11` or `wayland`) | Steps 1 to 6 here. At the end, list the `Host` aliases in `~/.ssh/config` and offer to do part F for any of them |
+| The user named a server: an alias from `~/.ssh/config`, a host name, or `user@host` | Part D for that server, from this machine; skip steps 1 to 6. If this machine is itself reached over ssh (`SSH_CONNECTION` is set), do nothing: tell the user to give this file and the server's name to Claude Code on the computer they sit at |
+| No server named, on a desktop (`XDG_SESSION_TYPE` is `x11` or `wayland`) | Steps 1 to 6 here. At the end, list the `Host` aliases in `~/.ssh/config` and offer to do part D for any of them |
 | No server named, on a machine reached over ssh | Steps 1 to 6 here. At the end, tell the user that for copy and paste in `claude` here, they give this file and this server's name to Claude Code on the computer they sit at |
 
-The result has six parts. Steps 1 to 6 set up A to E on the machine you run on. F connects `claude` on a server to the clipboard of the computer the user sits at, called the workstation below, and you set it up from there.
+The result has four parts. Steps 1 to 6 set up A to C on the machine you run on. D connects `claude` on a server to the clipboard of the computer the user sits at, called the workstation below, and you set it up from there.
 
 | Part | Where | Effect |
 |---|---|---|
-| A. Statusline | `~/.claude/statusline.sh`, `statusLine` in `~/.claude/settings.json` | Under the input box: `model \| effort: <level> \| context: N% \| 5h: N% (1h30m) \| weekly: N%` in orange, plus a green `rc` at the end while Remote Control is on; inside a repository also `branch: <branch> \| worktree: <name>` in cyan and green |
-| B. Git prompt | `~/.bash_git_prompt.sh`, a hook at the end of `~/.bashrc` | In any bash terminal inside a repository: yellow `(branch)` and pink `[worktree]` before the `$`; a linked worktree shows `[+name]` |
-| C. Bypass permissions | `permissions.defaultMode` and `skipDangerousModePermissionPrompt` in `~/.claude/settings.json` | Every new Claude Code session starts with `bypass permissions on` and no confirmation dialog |
-| D. Copy and paste | `tui` in `~/.claude/settings.json`, and `xclip` or `wl-clipboard` on a desktop | The fullscreen interface: selecting text copies it; Ctrl+V pastes text and images |
-| E. No attribution | `attribution` in `~/.claude/settings.json` | No co-author trailer, PR footer or session link from Claude Code |
-| F. Clipboard on a server | On the workstation, the server's block in `~/.ssh/config`; on the server, `xclip`, a `claude()` function at the end of `~/.bashrc`, and `tui` and `attribution` in `~/.claude/settings.json` if they are missing | In `claude` on that server over ssh: selecting text copies it to the workstation's clipboard, and Ctrl+V pastes the workstation's text and screenshots |
+| A. Git prompt | `~/.bash_git_prompt.sh`, a hook at the end of `~/.bashrc` | In any bash terminal inside a repository: yellow `(branch)` and pink `[worktree]` before the `$`; a linked worktree shows `[+name]` |
+| B. Colours over ssh | A `COLORTERM` block at the end of `~/.bashrc`, only on a machine reached over ssh | Claude Code and its statusline use the same truecolor as on the local machine, instead of lighter 256-colour approximations |
+| C. Claude Code | Everything in `prompts/setup/claude-code.md`: the statusline, bypass permissions, copy and paste, no attribution, Remote Control and the earlier auto-compact | As described there |
+| D. Clipboard on a server | On the workstation, the server's block in `~/.ssh/config`; on the server, `xclip`, a `claude()` function at the end of `~/.bashrc`, and `tui` and `attribution` in `~/.claude/settings.json` if they are missing | In `claude` on that server over ssh: selecting text copies it to the workstation's clipboard, and Ctrl+V pastes the workstation's text and screenshots |
 
-A to E are done when `accept.sh` ends with a line `== N PASS, 0 FAIL ==`, and F when `accept-clipboard.sh` does.
+A and B are done when `templates/workstation/accept.sh` ends with a line `== N PASS, 0 FAIL ==`, C when `templates/claude-code/accept.sh` does, and D when `templates/workstation/accept-clipboard.sh` does.
 
 ## Hard rules
 
 1. **Never use sudo.** You don't have the password. When a system package is missing, give the user the exact command and tell them to run it in the input box with a `!` prefix, so the output comes back into the conversation, for example `! sudo apt install -y jq xclip`.
 2. **Keys, tokens and logins belong to the user.** Never create an SSH key, never read or print a private key or token (including the contents of `~/.claude/.credentials.json`), and never run a login flow for the user. Give them the commands from the docs and wait. You may check whether something exists, for example `test -s ~/.claude/.credentials.json`, without reading it.
-3. **Install the scripts as they are.** Don't rewrite, "improve" or reformat `statusline.sh` or `bash_git_prompt.sh`: no changes to text, colours, labels, separators or order. The only allowed changes are the porting differences listed at the end, and they must not change what the scripts output.
-4. **Change only what this task owns.** In `~/.claude/settings.json`, only `statusLine`, `permissions.defaultMode`, `skipDangerousModePermissionPrompt`, `tui` and `attribution`; every other key stays, including `permissions.allow` and `permissions.deny`. In `~/.bashrc`, only append the hook (and, over ssh, the `COLORTERM` fix) at the end; never touch the lines the distribution put there, including its `PS1`. Part F lists the only three things it may change.
-5. **Finish with evidence.** Run the acceptance test and report its last line. If any check fails, fix the cause and run it again until it passes. Never report "it should work".
-6. **Don't fight the administrator.** If `/etc/claude-code/managed-settings.json` sets `"disableBypassPermissionsMode": "disable"`, bypass can't be turned on. Report it, and don't edit system files.
-7. Never run `claude` as root: Claude Code refuses bypass mode under root or sudo.
+3. **Install the scripts as they are.** Don't rewrite, "improve" or reformat `bash_git_prompt.sh` or `statusline.sh`: no changes to text, colours, labels, separators or order. The only allowed changes are the porting differences listed at the end of this file and of `prompts/setup/claude-code.md`, and they must not change what the scripts output.
+4. **Change only what this task owns.** In `~/.bashrc`, only append the hook (and, over ssh, the `COLORTERM` fix) at the end; never touch the lines the distribution put there, including its `PS1`. In `~/.claude/settings.json`, only the keys that `prompts/setup/claude-code.md` lists. Part D lists the only four things it may change.
+5. **Finish with evidence.** Run the acceptance tests and report their last lines. If any check fails, fix the cause and run it again until it passes. Never report "it should work".
+6. **Part C follows `prompts/setup/claude-code.md`.** Read it before step 4. Its hard rules and its notes on Remote Control, auto-compact and the weekly limit apply here too.
 
 ## Steps
 
-Steps 1 to 6 set up parts A to E on this machine. Read `<handbook>/templates/workstation/install.sh` and `<handbook>/templates/workstation/accept.sh` before you start.
+Steps 1 to 6 set up parts A to C on this machine. Read `<handbook>/templates/workstation/install.sh`, `<handbook>/templates/workstation/accept.sh` and `<handbook>/prompts/setup/claude-code.md` before you start.
 
 ### 1. Look at the machine
 
@@ -85,59 +82,43 @@ Read each value with `git config --global --get <key>`. Set the ones that are un
 bash <handbook>/templates/workstation/install.sh
 ```
 
-It checks the tools, installs A and B, merges the settings for C, D and E (keeping a backup of the old `settings.json`), adds the `COLORTERM` fix over ssh, and runs the acceptance test. It never uses sudo and can run again safely. If it stops at step 1 because something is missing, go back to step 2 of this prompt.
+It checks git and bash, installs A, adds B over ssh, and runs its acceptance test. Then it runs `templates/claude-code/install.sh` for C, which ends with its own test. Neither uses sudo, and both can run again safely. If one stops at its first step because something is missing, go back to step 2 of this prompt.
 
 If the installer can't run (for example on a system without `apt`), do the same by hand:
 
-1. Copy `statusline.sh` to `~/.claude/statusline.sh` with mode 755, and `bash_git_prompt.sh` to `~/.bash_git_prompt.sh` with mode 644. If a different file is already there, rename it to `<file>.bak-<date>` first.
+1. Copy `bash_git_prompt.sh` to `~/.bash_git_prompt.sh` with mode 644. If a different file is already there, rename it to `<file>.bak-<date>` first.
 2. Append the hook block from `install.sh` to `~/.bashrc`, unless the line `. ~/.bash_git_prompt.sh` is already there. It must come after the distribution's `PS1` setup, which the end of the file always is.
-3. Merge the settings with `jq`, using the absolute path of the statusline (not `~`):
-
-   ```bash
-   f=~/.claude/settings.json; [ -s "$f" ] || echo '{}' > "$f"
-   jq --arg cmd "$HOME/.claude/statusline.sh" '.statusLine = {type: "command", command: $cmd}
-         | .permissions.defaultMode = "bypassPermissions"
-         | .skipDangerousModePermissionPrompt = true
-         | .tui = "fullscreen"
-         | .attribution = {commit: "", pr: "", sessionUrl: false}' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
-   ```
-
-4. Over ssh only, append the `COLORTERM` block from `install.sh` to `~/.bashrc`.
-5. Run `bash <handbook>/templates/workstation/accept.sh`.
-
-Don't write `copyOnSelect`; it is on by default. If `~/.claude.json` has `"copyOnSelect": false`, the user turned it off; tell them, and leave it.
+3. Over ssh only, append the `COLORTERM` block from `install.sh` to `~/.bashrc`.
+4. Run `bash <handbook>/templates/workstation/accept.sh`.
+5. For C, follow step 3 of `prompts/setup/claude-code.md`.
 
 ### 5. Verify
 
-- The last line of the acceptance test must be `== N PASS, 0 FAIL ==`: 41 on a Linux desktop, 40 on a server reached over ssh (where `SKIP T12c` is expected).
-- For each `FAIL`, the test prints the expected and the actual value. Fix the cause (a missing file, hook, setting or package), not the scripts, and run `accept.sh` again.
+- `templates/workstation/accept.sh` must end with `== 13 PASS, 0 FAIL ==`.
+- `templates/claude-code/accept.sh` must end with `== N PASS, 0 FAIL ==`, with N as in step 4 of `prompts/setup/claude-code.md`, which also explains when `SKIP` lines are expected.
+- For each `FAIL`, the test prints the expected and the actual value. Fix the cause (a missing file, hook, setting or package), not the scripts, and run the test again.
 
 ### 6. Hand over
 
-Tell the user:
+Tell the user what step 5 of `prompts/setup/claude-code.md` lists, and also:
 
-1. Quit any running `claude` and start it again; the fullscreen interface, bypass mode and the statusline take effect then.
-2. Open a new terminal or run `source ~/.bashrc`; inside a repository the prompt shows `(branch) [worktree]`.
-3. Over ssh, log in again so the colours match the local machine. For copy and paste with the clipboard of the computer they sit at, screenshots included, they give this file and this server's name to Claude Code on that computer.
-4. To paste a screenshot on a GNOME desktop: press PrtSc, select, press Enter, then Ctrl+V in Claude Code; `[Image #1]` appears.
+1. Open a new terminal or run `source ~/.bashrc`; inside a repository the prompt shows `(branch) [worktree]`.
+2. Over ssh, log in again so the colours match the local machine. For copy and paste with the clipboard of the computer they sit at, screenshots included, they give this file and this server's name to Claude Code on that computer.
 
-Then list these checks for the user to try once in a real session:
+Add this check to the ones from `prompts/setup/claude-code.md`:
 
-- `/effort ultracode` changes line 1 to `effort: ultracode`, and `/effort xhigh` changes it back.
-- Inside a repository, line 2 reads `branch: <branch> | worktree: <name>`; outside one there is no line 2.
-- A new `claude` shows `⏵⏵ bypass permissions on` with no dialog.
-- Dragging over output shows `copied … to clipboard`.
+- In a new terminal, `cd` into a repository: the prompt shows a yellow `(branch)` and a pink `[name]` before the `$`; in a `git worktree add` directory, `[+name]`.
 
-## Part F: a server's clipboard, from the workstation
+## Part D: a server's clipboard, from the workstation
 
-Do this on the workstation, for the server the user named. If they named several, do one after the other. The workstation must be a Linux desktop (X11, or Wayland with XWayland). Read `<handbook>/templates/workstation/server-clipboard.sh` and `<handbook>/templates/workstation/accept-clipboard.sh` before you start. The rest of parts A to E on the server is not needed for this.
+Do this on the workstation, for the server the user named. If they named several, do one after the other. The workstation must be a Linux desktop (X11, or Wayland with XWayland). Read `<handbook>/templates/workstation/server-clipboard.sh` and `<handbook>/templates/workstation/accept-clipboard.sh` before you start. Parts A to C on the server are not needed for this.
 
 ### Why it doesn't work by default
 
 - The clipboard is on the workstation. A program on the server can reach it in two ways: the OSC 52 escape sequence, where the local terminal writes the clipboard (write only), or X11 forwarding, where `xclip` on the server talks to the workstation's display (read and write, text and images).
 - Claude Code treats a session as remote whenever `SSH_CONNECTION` is set. This is not documented; it was read from the code of Claude Code 2.1.295. In a remote session, copying only sends OSC 52, and reading the clipboard returns nothing. GNOME Terminal ignores OSC 52 (tested), so text selected in `claude` on a server is lost, and Ctrl+V finds no text.
 - Ctrl+V (`chat:imagePaste`) on Linux runs `xclip -selection clipboard -t TARGETS -o`, then reads `image/png` if there is an image and `text/plain` otherwise (`wl-paste` on Wayland). A server session usually has neither a `DISPLAY` nor `xclip`.
-- Copy on select exists only in the fullscreen interface (part D).
+- Copy on select exists only in the fullscreen interface (part C of `prompts/setup/claude-code.md`).
 
 ### The fix
 
@@ -154,9 +135,9 @@ workstation clipboard <-> workstation X display <-> ssh -Y tunnel (DISPLAY=local
 - **Change only these four things, and back each one up first:** the server's block in the workstation's `~/.ssh/config`; `~/.local/bin/xclip` on the server, only if the server has no `xclip` and no passwordless sudo; the `claude()` function at the end of the server's `~/.bashrc`, exactly as the script writes it; and in the server's `~/.claude/settings.json`, the keys `tui` and `attribution`, only if they are missing.
 - **Turn on trusted X11 forwarding only for the server the user named, never under `Host *`.** While it is on, anyone with root on that server can reach the workstation's display: take screenshots, log keystrokes, read the clipboard.
 - **Never change system files on the server, and never type a sudo password over ssh.** If the server has no `xauth`, or sshd has `X11Forwarding no`, tell the user that an administrator has to fix it.
-- **Done means `accept-clipboard.sh` ends with `0 FAIL`,** and you have given the user the checks in F4. Never report "it should work".
+- **Done means `accept-clipboard.sh` ends with `0 FAIL`,** and you have given the user the checks in D4. Never report "it should work".
 
-### F1. The workstation's `~/.ssh/config`
+### D1. The workstation's `~/.ssh/config`
 
 If the server is already a `Host` alias there and its block has both `ForwardX11` lines, change nothing. Otherwise back the file up with `cp ~/.ssh/config ~/.ssh/config.bak-$(date +%Y%m%d%H%M%S)`, then add the two lines to the server's block, or add a block. For a new block, take `HostName` and `User` from what the user gave, such as `user@host`, and use the first part of the host name as the alias unless they named one. Ask only for what is missing.
 
@@ -170,7 +151,7 @@ Host <alias>
 
 `ssh -G <alias> | grep -i forwardx11` must show `yes` for both. If `ssh -o BatchMode=yes <alias> true` fails, you can't run the remote steps: ask the user to set up key login, for example with `ssh-copy-id <alias>`, or to run the commands themselves with a `!` prefix.
 
-### F2. The server
+### D2. The server
 
 ```bash
 ssh <alias> 'bash -s' < <handbook>/templates/workstation/server-clipboard.sh
@@ -186,7 +167,7 @@ ssh <alias> 'f=~/.claude/settings.json; cp "$f" "$f.bak-$(date +%Y%m%d%H%M%S)" &
 
 If the server has no `~/.claude/settings.json` yet, or no `jq`, skip this and tell the user to give this file to Claude Code on the server once it is installed there.
 
-### F3. Acceptance test
+### D3. Acceptance test
 
 ```bash
 bash <handbook>/templates/workstation/accept-clipboard.sh <alias>
@@ -196,7 +177,7 @@ The test overwrites the workstation's clipboard for a few seconds and then puts 
 
 It checks the two ssh settings, key login, the forwarded `DISPLAY`, a copy in each direction between the workstation's clipboard and `xclip` on the server, the `claude()` function, and the check Claude Code uses. The last line must be `== 8 PASS, 0 FAIL ==`, or `== 7 PASS, 0 FAIL ==` with `SKIP T8` while Claude Code isn't installed on the server.
 
-### F4. Checks for the user
+### D4. Checks for the user
 
 Give the user these steps, to do once:
 
@@ -207,7 +188,7 @@ Give the user these steps, to do once:
 5. Put a screenshot on the workstation's clipboard, then press Ctrl+V in `claude`: `[Image #1]` appears.
 6. To use the terminal's own selection in the fullscreen interface, hold Shift while you drag.
 
-If the server doesn't have the rest of parts A to E (no statusline under the input box), add that they get it by giving this file to Claude Code on the server.
+If the server doesn't have parts A to C (no statusline under the input box), add that they get it by giving this file to Claude Code on the server.
 
 ### Notes
 
@@ -223,18 +204,15 @@ If the server doesn't have the rest of parts A to E (no statusline under the inp
 |---|---|
 | T4 fails: `DISPLAY` is empty on the server | Run `ssh -v <alias> true 2>&1 \| grep -i x11`. Usually the server has no `xauth`, sshd has `X11Forwarding no`, or the workstation itself has no `DISPLAY`, for example in a text console |
 | T5 or T6 fails while T4 passes | Usually the forwarding isn't trusted: check T2. Or a clipboard manager on the workstation takes over the clipboard |
-| T8 fails, or the server script warns that Claude Code decides ssh differently | An update changed how Claude Code detects ssh. Find the new check with `LC_ALL=C grep -aoE '.{0,200}SSH_CONNECTION.{0,200}' "$(readlink -f "$(command -v claude)")"`. If it now also looks at `SSH_CLIENT` or `SSH_TTY`, change `env -u SSH_CONNECTION` in the function to `env -u SSH_CONNECTION -u SSH_CLIENT -u SSH_TTY`, then do F3 and F4 again |
+| T8 fails, or the server script warns that Claude Code decides ssh differently | An update changed how Claude Code detects ssh. Find the new check with `LC_ALL=C grep -aoE '.{0,200}SSH_CONNECTION.{0,200}' "$(readlink -f "$(command -v claude)")"`. If it now also looks at `SSH_CLIENT` or `SSH_TTY`, change `env -u SSH_CONNECTION` in the function to `env -u SSH_CONNECTION -u SSH_CLIENT -u SSH_TTY`, then do D3 and D4 again |
 
 ## Porting notes
 
-The scripts are written for GNU/Linux with bash. Elsewhere, only these changes are allowed:
+The scripts are written for GNU/Linux with bash. Elsewhere, only these changes are allowed; for `statusline.sh`, see the porting notes in `prompts/setup/claude-code.md`.
 
 | Where | Change |
 |---|---|
-| macOS: `tac` is missing | In `statusline.sh`, replace `tac -- "$transcript"` with `tail -r "$transcript"` |
 | macOS: the system bash is 3.2 | `brew install bash`, and make sure that bash comes first in `PATH`, because the scripts use bash 4.2 features |
 | macOS: `sort -V` may be missing | If `install.sh` calls git too old although `git --version` says 2.31 or later, check the versions by hand and install the parts by hand as in step 4 |
-| macOS: credentials live in the Keychain | `install.sh` checks `~/.claude/.credentials.json` only on Linux; on macOS, ask the user whether `claude` is logged in |
-| zsh as the login shell | `bash_git_prompt.sh` is for bash only. Don't source it from `~/.zshrc`; report part B as not applicable. T10m then fails, which is expected |
-| macOS: pasting | Ctrl+V (not Cmd+V) pastes images through `osascript` and `pbpaste`; nothing to install. T12c is skipped |
+| zsh as the login shell | `bash_git_prompt.sh` is for bash only. Don't source it from `~/.zshrc`; report part A as not applicable. T10m then fails, which is expected |
 | Other Linux distributions, WSL | GNU tools are present; install the packages with the system's own package manager instead of `apt` |

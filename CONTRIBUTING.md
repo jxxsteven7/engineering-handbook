@@ -49,6 +49,7 @@ The check can't tell whether the translation says the same thing, so read the di
 node scripts/check-docs-sync.mjs --status
 node scripts/check-docs-sync.mjs
 node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs
+SCRIPTS_ONLY=1 bash templates/claude-code/accept.sh
 SCRIPTS_ONLY=1 bash templates/workstation/accept.sh
 bash templates/workstation/selftest-clipboard.sh
 bash templates/overnight/selftest.sh

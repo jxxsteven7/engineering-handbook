@@ -3,7 +3,8 @@
 # Install it as ~/.claude/statusline.sh; templates/workstation/install.sh does that.
 #
 # Up to 2 lines:
-#   1. model | effort | context % | 5h % | weekly % | rc   (Claude orange; "rc" green, only while Remote Control is on)
+#   1. model | effort | context % | 5h % | weekly-fable % or weekly-allmodels % | rc
+#      (Claude orange; "rc" green, only while Remote Control is on)
 #   2. branch | worktree                       (branch cyan, worktree green)
 # Segments are joined with " | "; a segment whose value is missing is dropped, and
 # line 2 is omitted entirely outside a git repository. The permission-mode / PR /
@@ -12,6 +13,51 @@
 # the statusline disappear.
 
 set -uo pipefail
+
+# ---------- per-model weekly usage: shared cache + detached fetcher ----------
+# The payload never carries the per-model weekly bucket (the CLI's "Fable limit");
+# only GET /api/oauth/usage does, which is exactly what /usage calls. It is an
+# account endpoint, not a model call: it costs zero tokens on any 5-hour/weekly bucket.
+#   * one cache shared by every session: $SL_CACHE/usage.json
+#   * refreshed at most once per SL_USAGE_TTL seconds, only while a Fable session
+#     is rendering, by `setsid -f bash "$0" --fetch-usage` — a detached curl that
+#     exits within seconds. No daemon, no extra Claude session, nothing runs when
+#     no Claude Code is open.
+#   * a render never waits for the network; it shows whatever the cache holds
+#   * the OAuth access token is read from ~/.claude/.credentials.json (0600; macOS keeps
+#     it in the Keychain instead, see the porting notes in the prompt) and
+#     handed to curl via `-K -` on stdin, so it never shows up in `ps`
+#   * the token is NEVER refreshed here (refresh tokens rotate; racing the CLI would
+#     log it out). Expired token -> skip; the cache goes stale; line 1 falls back to
+#     weekly-allmodels from the payload.
+#   * /api/oauth/usage is not a documented API. If it changes, the Fable number simply
+#     disappears and line 1 shows weekly-allmodels.
+SL_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/claude-statusline"
+SL_USAGE_TTL=60        # seconds between fetch attempts
+SL_USAGE_MAX_AGE=600   # a cache older than this is not displayed
+
+if [[ "${1-}" == "--fetch-usage" ]]; then
+  mkdir -p "$SL_CACHE" || exit 0
+  exec 9>"$SL_CACHE/usage.lock"
+  flock -n 9 || exit 0                                  # another fetcher is running
+  cred="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.credentials.json"
+  [[ -r "$cred" ]] || exit 0
+  mapfile -t C < <(jq -r '.claudeAiOauth | [(.accessToken // ""), ((.expiresAt // 0) | tostring)] | .[]' "$cred" 2>/dev/null)
+  tok="${C[0]-}"; exp_ms="${C[1]-0}"
+  [[ -n "$tok" && "$exp_ms" =~ ^[0-9]+$ ]] || exit 0
+  printf -v now '%(%s)T' -1
+  (( exp_ms / 1000 > now + 30 )) || exit 0              # expired: the CLI will refresh it
+  tmp=$(mktemp "$SL_CACHE/usage.XXXXXX") || exit 0
+  code=$(printf 'url = "https://api.anthropic.com/api/oauth/usage"\nheader = "Authorization: Bearer %s"\nheader = "anthropic-beta: oauth-2025-04-20"\nheader = "User-Agent: claude-cli/%s (external, cli)"\n' \
+           "$tok" "${2:-unknown}" \
+         | curl -sS -K - -m 8 -o "$tmp" -w '%{http_code}' 2>/dev/null) || true
+  if [[ "$code" == "200" ]] && jq -e '.limits | type == "array"' "$tmp" >/dev/null 2>&1; then
+    mv -f "$tmp" "$SL_CACHE/usage.json"
+  else
+    rm -f "$tmp"
+  fi
+  exit 0
+fi
 
 input=$(cat)
 
@@ -41,6 +87,8 @@ mapfile -t F < <(
     , (.context_window.used_percentage // "")
     , (.rate_limits.seven_day.used_percentage // "")
     , (.transcript_path // "")
+    , (.model.id // "")
+    , (.version // "")
     , (.rate_limits.five_hour.used_percentage // "")
     , (.rate_limits.five_hour.resets_at // "")
     ] | .[] | tostring' 2>/dev/null
@@ -53,8 +101,10 @@ cur_dir="${F[4]-}"
 ctx_pct="${F[5]-}"
 wk_pct="${F[6]-}"
 transcript="${F[7]-}"
-fh_pct="${F[8]-}"
-fh_reset="${F[9]-}"
+model_id="${F[8]-}"
+cli_ver="${F[9]-}"
+fh_pct="${F[10]-}"
+fh_reset="${F[11]-}"
 
 # Round a percentage to a whole number; fail (non-zero) when absent/unparseable.
 fmt_pct() {
@@ -133,13 +183,39 @@ fi
 SEP=" | "
 
 # Line 1 (Claude orange, one colour for the whole line):
-#   <model> | effort: <level> | context: N% | 5h: N% (1h30m) | weekly: N% | rc
+#   <model> | effort: <level> | context: N% | 5h: N% (1h30m) | weekly-fable: N% | rc
 #   model   = model.display_name, else model.id, else "Claude".
 #   effort  = effort.level, replaced by "ultracode" when the transcript says so.
 #   context = the current model's context window.
 #   5h      = rate_limits.five_hour, the 5-hour session limit, and the time until it resets.
-#   weekly  = rate_limits.seven_day, the account-wide 7-day limit.
+#   weekly-fable     = this week's Fable limit (the CLI's "Fable limit") from the shared
+#                      /api/oauth/usage cache; shown while this session runs a Fable
+#                      model and the cache is fresh (fetcher at the top).
+#   weekly-allmodels = rate_limits.seven_day, the account-wide 7-day limit across all
+#                      models; shown for every other model, and whenever the Fable number
+#                      is unavailable.
 #   rc      = shown, in green, only while Remote Control is on.
+fable_pct=""
+if [[ "${model_id,,}" == *fable* || "${model,,}" == *fable* ]]; then
+  printf -v now '%(%s)T' -1
+  cache_m=0; attempt_m=0
+  while read -r name mtime; do
+    case "$name" in
+      */usage.json)    cache_m=$mtime ;;
+      */usage.attempt) attempt_m=$mtime ;;
+    esac
+  done < <(stat -c '%n %Y' "$SL_CACHE/usage.json" "$SL_CACHE/usage.attempt" 2>/dev/null)
+  if (( now - cache_m > SL_USAGE_TTL && now - attempt_m > SL_USAGE_TTL )); then
+    mkdir -p "$SL_CACHE" 2>/dev/null && : > "$SL_CACHE/usage.attempt"
+    setsid -f bash "$0" --fetch-usage "$cli_ver" </dev/null >/dev/null 2>&1
+  fi
+  if (( now - cache_m <= SL_USAGE_MAX_AGE )); then
+    fable_pct=$(jq -r '[ .limits[]? | select(.kind == "weekly_scoped"
+                          and ((.scope.model.display_name // "") | ascii_downcase | startswith("fable"))) ]
+                       | first | .percent // empty' "$SL_CACHE/usage.json" 2>/dev/null)
+  fi
+fi
+
 effort_label="$effort"
 (( ultra )) && effort_label="ultracode"
 
@@ -155,7 +231,8 @@ if v=$(fmt_pct "$fh_pct"); then                    # "5h: 41% (2h13m)": time lef
   fi
   parts+=("5h: ${v}%${left}")
 fi
-if v=$(fmt_pct "$wk_pct");  then parts+=("weekly: ${v}%"); fi
+if v=$(fmt_pct "$fable_pct"); then parts+=("weekly-fable: ${v}%")
+elif v=$(fmt_pct "$wk_pct");  then parts+=("weekly-allmodels: ${v}%"); fi
 
 # ---------- Remote Control ----------
 # Claude Code records each session in ~/.claude/sessions/<pid>.json and fills in

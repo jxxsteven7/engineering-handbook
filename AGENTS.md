@@ -12,7 +12,7 @@ This repository is a handbook. `docs/` is written for people, in Chinese and Eng
 - **Never add AI or agent attribution.** Commit messages contain no `Co-Authored-By` trailers for AI tools, no "Generated with" lines and no session links. The commit author is the user. Subjects read `<type>: <summary>`; the `commit-msg` hook checks this, and you never bypass it with `--no-verify`.
 - **Keep both languages in sync.** The maintainer often edits only the Chinese `X.zh-CN.md`. To bring the other language in line, follow `.claude/skills/sync-docs/SKILL.md` (in Claude Code, `/sync-docs`). Record the stamp with `node scripts/check-docs-sync.mjs --update <file>` only once the two files really say the same thing.
 - **Keep docs and prompts together.** When a doc's rules change, update the prompt that follows it, and the other way round.
-- **Run the checks** before you commit: `node scripts/check-docs-sync.mjs`, `node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs`, `SCRIPTS_ONLY=1 bash templates/workstation/accept.sh`, `bash templates/workstation/selftest-clipboard.sh` and `bash templates/overnight/selftest.sh`.
+- **Run the checks** before you commit: `node scripts/check-docs-sync.mjs`, `node --test scripts/*.test.mjs templates/repo/scripts/*.test.mjs`, `SCRIPTS_ONLY=1 bash templates/claude-code/accept.sh`, `SCRIPTS_ONLY=1 bash templates/workstation/accept.sh`, `bash templates/workstation/selftest-clipboard.sh` and `bash templates/overnight/selftest.sh`.
 
 ## Writing
 

@@ -47,7 +47,7 @@ Specifically, my rules and workflows cover:
 |---|---|---|
 | `docs/rules/` | People | The rules, that is, the method itself: what to do and why, with only the commands that best show each rule. In English and Chinese; read them once, in the order of the contents below. |
 | `docs/agents/` | People | Working with agents: the rules you need only when you use agents, such as parallel development and the overnight review. In English and Chinese; read them after the rules. |
-| `docs/tools/` | People | How to use the tools: setting up a workstation, SSH, git. In English and Chinese; look things up when you need them. |
+| `docs/tools/` | People | How to use the tools: setting up a workstation and Claude Code, SSH, git. In English and Chinese; look things up when you need them. |
 | `prompts/` | Agents | Detailed step-by-step instructions you give an agent so it sets something up or does a task by the same rules. In English only. |
 | `templates/` | Your machines and repositories | Real files to copy elsewhere and run: scripts, hooks, CI workflows, blank plans. You rarely copy them by hand; the prompts tell the agent which ones to take. |
 | `scripts/`, `.githooks/`, `.github/` | This repository | Its own checks. |
@@ -81,13 +81,14 @@ Files for the overnight round: [templates/overnight/](templates/overnight/).
 
 | Doc | Prompts for agents |
 |---|---|
-| [Set up a workstation](docs/tools/workstation.md): packages, git settings, Claude Code and Codex, statusline, git prompt, permissions | [workstation.md](prompts/setup/workstation.md) |
+| [Set up a workstation](docs/tools/workstation.md): packages, git settings, Claude Code and Codex, git prompt, and everything in the next row | [workstation.md](prompts/setup/workstation.md) |
+| [Set up Claude Code](docs/tools/claude-code.md): statusline, bypass permissions, copy and paste, no attribution, Remote Control, earlier auto-compact | [claude-code.md](prompts/setup/claude-code.md) |
 | [SSH and GitHub](docs/tools/ssh-and-github.md): SSH key, `~/.ssh/config`, logging in to `gh`, the clipboard on servers | You do keys and logins yourself; for the clipboard on servers, give [workstation.md](prompts/setup/workstation.md) and the server's alias to an agent |
 | [Common Git commands](docs/tools/git-commands.md): status and history, syncing with the remote, commits, branches, stash, tags | |
 | [Repositories and worktrees](docs/tools/git-repos.md): the ways to open a repository, creating worktrees, cleaning up after a task | [set-up-project.md](prompts/workspace/set-up-project.md), [start-task.md](prompts/workspace/start-task.md), [finish-task.md](prompts/workspace/finish-task.md) |
 | [Git first aid](docs/tools/git-first-aid.md): rebase conflicts and common accidents | |
 
-Files for your machine: [templates/workstation/](templates/workstation/).
+Files for your machine: [templates/workstation/](templates/workstation/), [templates/claude-code/](templates/claude-code/).
 
 ### Coming next
 
