@@ -20,6 +20,8 @@ The project uses the layout `~/code/<repo>/<repo>` for the main clone, with work
 
 Check that none of these exists yet: `git worktree list`, `git branch --list <branch>`, `git ls-remote --heads origin <branch>`, `tmux has-session -t cc-<name>`.
 
+If the repository is on GitHub, run `gh issue list` and tell the user about open issues related to the task. Fold them into this branch only if the user agrees; the pull request then closes them.
+
 ## 2. Create the worktree
 
 From the main clone:

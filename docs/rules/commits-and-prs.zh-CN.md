@@ -29,6 +29,18 @@ every reconnect. Look them up by their player token instead.
 - 追加新的 commit，不要 amend，这样 reviewer 能看到改了什么。反正最后 squash 合并时，这些历史都会被整理掉。
 - 每条意见都要回应：要么照改，要么说明为什么不改。reviewer 没看懂的代码，优先把代码改清楚，而不是只在回复里解释。
 
+## 做的过程中发现别的问题
+
+- 和这个 PR 无关的问题不顺手改，先开成 issue，写清现象和在哪发现的。PR 还是只做原来那件事。
+- 隔一段时间过一遍 issue，把相关的几条合成一个任务，开分支修，PR 描述里每条写一行 `Closes #N`。只写一个 `Closes #12, #15`，GitHub 只会关掉 #12。
+
+```bash
+gh issue create --title "fix: <summary>" --body "Found while working on #<PR>: <details>"
+gh issue list
+```
+
+这样 PR 保持小、好审，发现的问题也不会丢。
+
 ## 关键命令
 
 在自己的分支上跟上 `main`：
@@ -61,4 +73,4 @@ git rebase --update-refs --onto origin/main feat/lobby-model       # from the to
 
 Google 的指南采用 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 协议。
 
-<!-- docs-sync: 7085b442696a3ed3d1ce7ee6a9a883eae331be763bc9cfed45aaacb626be2dd8 -->
+<!-- docs-sync: 76f3670f48dde451140b6f2e41f078cdc2fd2cdf92b661b7e6299f046d031706 -->

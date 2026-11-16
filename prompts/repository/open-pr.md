@@ -8,6 +8,11 @@ Use this while you make a change in a repository whose `main` is protected: one 
 
 - Never commit to `main`, push to `main`, merge a pull request, approve one, or push to a branch that isn't yours.
 - If the change turns out to need more than one purpose, or grows past about 400 changed lines, stop and propose how to split it before you go on.
+- If you find a problem unrelated to the task, don't fix it in this branch. Note what happens and where you found it, propose an issue to the user, and create it once they approve:
+
+  ```bash
+  gh issue create --title "<type>: <summary>" --body "Found while working on #<PR>: <details>"
+  ```
 - After opening the pull request and waiting for its checks, stop and report. A person reviews and merges.
 
 ## 1. Branch
@@ -52,7 +57,7 @@ Commit in small steps. Every message follows these rules, which the `commit-msg`
    Only rebase your own branch. On a branch that others push to, use `git merge origin/main`.
 2. Run every check that `AGENTS.md` or `CONTRIBUTING.md` lists, and make them pass. If one fails and you can't fix it within the scope of this change, stop and report it.
 3. Read the whole change as a reviewer would: `git diff origin/main...HEAD`. Look for:
-   - changes unrelated to the task, which go in another pull request;
+   - changes unrelated to the task: take them out and turn each into an issue, as in the stop points;
    - leftover debug output, commented-out code, temporary files;
    - secrets, tokens, personal paths;
    - behavior changes without tests;
@@ -66,7 +71,7 @@ Commit in small steps. Every message follows these rules, which the `commit-msg`
 2. Title: `<type>: <summary>` under the same rules as a commit subject, without a version, at most about 64 characters so that the version CI adds still fits in 72.
 3. Description: fill in `.github/pull_request_template.md` if it exists. Otherwise use these sections:
    - **What**: one or two sentences.
-   - **Why**: the problem, with `Closes #N` for the issue.
+   - **Why**: the problem, with one `Closes #N` line per issue it fixes. `Closes #12, #15` closes only #12.
    - **How tested**: the commands you ran and what you checked by hand; screenshots for UI changes.
    - **AI assistance**: which parts an AI agent wrote. Leave any box that says the person has read and checked the code unticked; that is for the person to tick.
 4. Create it, as a draft if the work isn't finished:

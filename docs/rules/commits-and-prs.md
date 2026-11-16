@@ -29,6 +29,18 @@ every reconnect. Look them up by their player token instead.
 - Push new commits instead of amending, so the reviewer can see what changed. The squash merge cleans up the history anyway.
 - Answer every comment: make the change, or explain why not. If the reviewer didn't understand some code, make the code clearer rather than only replying.
 
+## Problems you find along the way
+
+- Don't fix a problem unrelated to this PR on the side. Open an issue for it, saying what happens and where you found it. The PR still does only its one thing.
+- Every so often, go through the issues, group a few related ones into one task and fix them on a new branch. Put one `Closes #N` line per issue in the PR description. A single `Closes #12, #15` closes only #12.
+
+```bash
+gh issue create --title "fix: <summary>" --body "Found while working on #<PR>: <details>"
+gh issue list
+```
+
+The PR stays small and easy to review, and the problem doesn't get lost.
+
 ## Key commands
 
 Catch up with `main` on your own branch:
